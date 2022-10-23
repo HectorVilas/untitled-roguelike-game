@@ -47,10 +47,10 @@ const display = (() => {
     for(let y = 0; y < board.getHeight() ;y++){
       for(let x = 0; x < board.getWidth(); x++){
         const i = x + ( y * board.getWidth() );
-        // layerTiles[i].innerText = player.y == y && player.x == x ? "@" : maps.getMap()[y][x];
         layerTiles[i].innerText =
-          layer === 1 && player.y == y && player.x == x
-          ? "@" : maps.getMap()[y][x];
+          layer === 1 && player.y == y && player.x == x 
+          ? "@"
+          : maps.getMap()[layer][y][x];
       }
     }
   };
@@ -118,26 +118,114 @@ const controls = (() => {
 // ╔ ╚ ╝ ╗ ║ ═ ╩ ╦ ╠ ╣ ╬
 const maps = (() => {
   const map = [
-    "     NORTE     ",
-    "               ",
-    "  ╔═  ════ ═╗  ",
-    "            ║  ",
-    "  ║            ",
-    "            ║  ",
-    "  ╚════  ═══╝  ",
-    "O             E",
-    "E             S",
-    "S             T",
-    "T             E",
-    "E           ║  ",
-    "            ║  ",
-    "        ════╝  ",
-    "      SUR      ",
+    [ //floor
+      "sssssssssssssdd",
+      "ssssssssssssddd",
+      "ssssssssssdddDD",
+      "sssssssssdddDdd",
+      "sssssssssdddDdd",
+      "sssssssssdddDdd",
+      "sssssssssdddDdd",
+      "sssssssssdddDdd",
+      "sssssssssdddDdd",
+      "ssssssssssddDdd",
+      "sssssssssssdDdd",
+      "dddssssssssddDd",
+      "ddddssssssssdDd",
+      "ddddssssssssddD",
+      "dddddssssssssdd",
+    ],
+    [ //walls
+      "               ",
+      "               ",
+      "  ww  wwww ww  ",
+      "            w  ",
+      "  w            ",
+      "            w  ",
+      "  wwwww  wwww  ",
+      "               ",
+      "               ",
+      "               ",
+      "               ",
+      "            w  ",
+      "            w  ",
+      "        wwwww  ",
+      "               ",
+    ],
+    [ //ceiling
+      "               ",
+      "               ",
+      "  ccccccccccc  ",
+      "  ccccccccccc  ",
+      "  ccccccccccc  ",
+      "  ccccccccccc  ",
+      "  ccccccccccc  ",
+      "               ",
+      "               ",
+      "               ",
+      "               ",
+      "           cc  ",
+      "          ccc  ",
+      "       cccccc  ",
+      "               ",
+    ]
+
   ];
+
+  const tiles = {
+    " ": {
+      url: null,
+      name: "nothing",
+      blocks: false,
+      flamable: false,
+    },
+    "w": {
+      url: "./media/images/tiles/wall.png",
+      name: "wall",
+      blocks: true,
+      flamable: true,
+    },
+    "s": {
+      url: "./media/images/tiles/sand.png",
+      name: "sand",
+      blocks: false,
+      flamable: false,
+    },
+    "S": {
+      url: "./media/images/tiles/sand-path.png",
+      name: "sand path",
+      blocks: false,
+      flamable: false,
+    },
+    "g": {
+      url: "./media/images/tiles/grass.png",
+      name: "grass",
+      blocks: false,
+      flamable: true,
+    },
+    "d": {
+      url: "./media/images/tiles/dirt.png",
+      name: "dirt",
+      blocks: false,
+      flamable: true,
+    },
+    "D": {
+      url: "./media/images/tiles/dirt-path.png",
+      name: "dirt path",
+      blocks: false,
+      flamable: true,
+    },
+    "c": {
+      url: null,
+      name: "ceiling",
+      blocks: false,
+      flamable: true,
+    },
+  }
 
   const getMap = () => map;
 
-  return { getMap };
+  return { getMap, tiles };
 })();
 
 
