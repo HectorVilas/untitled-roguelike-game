@@ -1,14 +1,35 @@
+class Player {
+  constructor(name, x, y) {
+    this.name = name;
+    this.x = x;
+    this.y = y;
+  }
+
+  get x(){
+    return this._x;
+  };
+  get y(){
+    return this._y;
+  };
+  set x(val){
+    this._x = parseInt(val);
+  };
+  set y(val){
+    this._y = parseInt(val);
+  };
+}
+
+//--------------------------------------------------
+
 const display = (() => {
   const dom = {
     board: document.querySelector("#board"),
     layer0: document.querySelector("#layer0"),
     layer1: document.querySelector("#layer1"),
     layer2: document.querySelector("#layer2"),
-    
   };
 
   function createBoard(){
-    const layers = 3;
     for(let i = 0; i < 3; i++){
       for(let j = 0; j < board.getSize() ; j++){
         const tile = document.createElement("div");
@@ -23,10 +44,10 @@ const display = (() => {
 
   function drawOnBoard(){
     const layer0Tiles = document.querySelectorAll("#layer0 .tile");
-    for(let x = 0; x < board.getHeight() ;x++){
-      for(let y = 0; y < board.getWidth(); y++){
-        const i = y + ( x * board.getWidth() )
-        layer0Tiles[i].innerText = maps.getMap()[x][y];
+    for(let y = 0; y < board.getHeight() ;y++){
+      for(let x = 0; x < board.getWidth(); x++){
+        const i = x + ( y * board.getWidth() );
+        layer0Tiles[i].innerText = player.y == y && player.x == x ? "@" : maps.getMap()[y][x];
       }
     }
   };
@@ -34,11 +55,11 @@ const display = (() => {
   return { createBoard, drawOnBoard };
 })();
 
-//////////////////////////////////////////////////
+//--------------------------------------------------
 
 const board = (() => {
-  const width = 16;
-  const height = 16;
+  const width = 15;
+  const height = 15;
 
   const getWidth = () => width;
   const getHeight = () => height;
@@ -47,26 +68,67 @@ const board = (() => {
   return { getWidth, getHeight, getSize };
 })();
 
-//////////////////////////////////////////////////
+//--------------------------------------------------
+
+const gameLogic = (() => {
+  //game rules here
+  return {  };
+})();
+
+//--------------------------------------------------
+
+const controls = (() => {
+  const addListeners = () => {
+    window.addEventListener("keydown", (e) => {
+      const k = e.key.toLowerCase();
+      k === "arrowup" || k === "w" || k === "8" ? actionUp() :
+      k === "arrowdown" || k === "s" || k === "2" ? actionDown() :
+      k === "arrowleft" || k === "a" || k === "6" ? actionLeft() :
+      k === "arrowright" || k === "d" || k === "4" ? actionRight() :
+      console.log(k + " is not binded");
+    })
+  };
+
+  const actionUp = () => {
+    player.y--;
+    display.drawOnBoard();
+  }
+  const actionDown = () => {
+    player.y++;
+    display.drawOnBoard();
+  }
+  const actionLeft = () => {
+    player.x--;
+    display.drawOnBoard();
+  }
+  const actionRight = () => {
+    player.x++;
+    display.drawOnBoard();
+  }
+
+  return { addListeners };
+})();
+
+//--------------------------------------------------
+
 // ╔ ╚ ╝ ╗ ║ ═ ╩ ╦ ╠ ╣ ╬
 const maps = (() => {
   const map = [
-    "     NORTE      ",
-    "                ",
-    "  ╔═  ════  ═╗  ",
-    "             ║  ",
-    "  ║             ",
-    "             ║  ",
-    "  ╚════  ════╝  ",
-    "O              E",
-    "E              S",
-    "S              T",
-    "T              E",
-    "E            ║  ",
-    "             ║  ",
-    "             ║  ",
-    "        ═════╝  ",
-    "      SUR       ",
+    "     NORTE     ",
+    "               ",
+    "  ╔═  ════ ═╗  ",
+    "            ║  ",
+    "  ║            ",
+    "            ║  ",
+    "  ╚════  ═══╝  ",
+    "O             E",
+    "E             S",
+    "S             T",
+    "T             E",
+    "E           ║  ",
+    "            ║  ",
+    "        ════╝  ",
+    "      SUR      ",
   ];
 
   const getMap = () => map;
@@ -74,6 +136,14 @@ const maps = (() => {
   return { getMap };
 })();
 
+
+
+//--------------------------------------------------
+
 //run on start
+// const player = Player("Jason");
+const player = new Player("Jason", 4, 4);
+
 display.createBoard();
+controls.addListeners();
 display.drawOnBoard();
