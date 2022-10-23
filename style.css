@@ -31,15 +31,9 @@ body {
   grid-template-columns: repeat(15, 1fr);
 }
 
-/*hidden temporally*/
-#layer1, #layer2 {
-  display: none;
-}
-
 .tile {
   box-sizing: border-box;
   border: 1px solid hsl(34, 57%, 65%);
-  background-color: burlywood;
   display: flex;
   justify-content: center;
   align-items: center;
