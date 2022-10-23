@@ -1,0 +1,53 @@
+:root {
+  --board-size: 95vmin;
+}
+
+body {
+  background: radial-gradient(at top, hsl(220, 50%, 30%), hsl(220, 30%, 20%));
+  padding: 0;
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* - - - board - - - */
+#board {
+  position: relative;
+  isolation: isolate;
+  width: var(--board-size);
+  height: var(--board-size);
+  box-sizing: border-box;
+  border: 5px groove black;
+}
+.board-layer {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-rows: repeat(16, 1fr);
+  grid-template-columns: repeat(16, 1fr);
+}
+
+/*hidden temporally*/
+#layer1, #layer2 {
+  display: none;
+}
+
+.tile {
+  box-sizing: border-box;
+  border: 1px solid hsl(34, 57%, 65%);
+  background-color: burlywood;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  font-size: 2.5rem;
+}
+
+/* for testing */
+** {
+  outline: 1px solid crimson;
+}
