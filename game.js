@@ -71,8 +71,26 @@ const board = (() => {
 //--------------------------------------------------
 
 const gameLogic = (() => {
-  //game rules here
-  return {  };
+    const action = {
+      up(){
+      player.y--;
+      display.drawOnBoard();
+    },
+    down(){
+      player.y++;
+      display.drawOnBoard();
+    },
+    left(){
+      player.x--;
+      display.drawOnBoard();
+    },
+    right(){
+      player.x++;
+      display.drawOnBoard();
+    }
+    }
+
+  return { action };
 })();
 
 //--------------------------------------------------
@@ -81,30 +99,13 @@ const controls = (() => {
   const addListeners = () => {
     window.addEventListener("keydown", (e) => {
       const k = e.key.toLowerCase();
-      k === "arrowup" || k === "w" || k === "8" ? actionUp() :
-      k === "arrowdown" || k === "s" || k === "2" ? actionDown() :
-      k === "arrowleft" || k === "a" || k === "6" ? actionLeft() :
-      k === "arrowright" || k === "d" || k === "4" ? actionRight() :
+      k === "arrowup" || k === "w" || k === "8" ? gameLogic.action.up() :
+      k === "arrowdown" || k === "s" || k === "2" ? gameLogic.action.down() :
+      k === "arrowleft" || k === "a" || k === "6" ? gameLogic.action.left() :
+      k === "arrowright" || k === "d" || k === "4" ? gameLogic.action.right() :
       console.log(k + " is not binded");
     })
   };
-
-  const actionUp = () => {
-    player.y--;
-    display.drawOnBoard();
-  }
-  const actionDown = () => {
-    player.y++;
-    display.drawOnBoard();
-  }
-  const actionLeft = () => {
-    player.x--;
-    display.drawOnBoard();
-  }
-  const actionRight = () => {
-    player.x++;
-    display.drawOnBoard();
-  }
 
   return { addListeners };
 })();
