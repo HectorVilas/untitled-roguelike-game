@@ -42,12 +42,15 @@ const display = (() => {
     }
   };
 
-  function drawOnBoard(){
-    const layer0Tiles = document.querySelectorAll("#layer0 .tile");
+  function drawOnBoard(layer){
+    const layerTiles = document.querySelectorAll(`#layer${layer} .tile`);
     for(let y = 0; y < board.getHeight() ;y++){
       for(let x = 0; x < board.getWidth(); x++){
         const i = x + ( y * board.getWidth() );
-        layer0Tiles[i].innerText = player.y == y && player.x == x ? "@" : maps.getMap()[y][x];
+        // layerTiles[i].innerText = player.y == y && player.x == x ? "@" : maps.getMap()[y][x];
+        layerTiles[i].innerText =
+          layer === 1 && player.y == y && player.x == x
+          ? "@" : maps.getMap()[y][x];
       }
     }
   };
@@ -71,24 +74,24 @@ const board = (() => {
 //--------------------------------------------------
 
 const gameLogic = (() => {
-    const action = {
-      up(){
+  const action = {
+    up(){
       player.y--;
-      display.drawOnBoard();
+      display.drawOnBoard(1);
     },
     down(){
       player.y++;
-      display.drawOnBoard();
+      display.drawOnBoard(1);
     },
     left(){
       player.x--;
-      display.drawOnBoard();
+      display.drawOnBoard(1);
     },
     right(){
       player.x++;
-      display.drawOnBoard();
+      display.drawOnBoard(1);
     }
-    }
+  };
 
   return { action };
 })();
@@ -147,4 +150,5 @@ const player = new Player("Jason", 4, 4);
 
 display.createBoard();
 controls.addListeners();
-display.drawOnBoard();
+display.drawOnBoard(0);
+display.drawOnBoard(1);
