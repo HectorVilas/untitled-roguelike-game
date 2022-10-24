@@ -33,12 +33,14 @@ body {
 
 .tile {
   box-sizing: border-box;
-  border: 1px solid hsl(34, 57%, 65%);
+  /* border: 1px solid hsl(34, 57%, 65%); */
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
   font-size: 2.5rem;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
 }
 
 /* for testing */
