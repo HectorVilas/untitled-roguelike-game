@@ -47,10 +47,10 @@ const display = (() => {
     for(let y = 0; y < board.getHeight() ;y++){
       for(let x = 0; x < board.getWidth(); x++){
         const i = x + ( y * board.getWidth() );
-        layerTiles[i].innerText =
-          layer === 1 && player.y == y && player.x == x 
-          ? "@"
-          : maps.getMap()[layer][y][x];
+        const url = layer === 1 && player.y == y && player.x == x
+        ? "./media/images/sprites/arroba.png"
+        : maps.tiles[maps.getMap()[layer][y][x]].url;
+        layerTiles[i].style.backgroundImage = `url(${url})`;
       }
     }
   };
