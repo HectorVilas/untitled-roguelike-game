@@ -143,19 +143,19 @@ const maps = (() => {
     [ //walls
       "               ",
       "               ",
-      "  wwwwwwwwwww  ",
-      "  w         w  ",
-      "  w            ",
-      "  w         w  ",
-      "  wwwww  wwww  ",
+      "  ww www       ",
+      "  w    w       ",
+      "               ",
+      "  w    w       ",
+      "  ww www       ",
       "               ",
       "               ",
       "               ",
       "               ",
-      "        ww ww  ",
-      "        w   w  ",
-      "        wwwww  ",
-      "               ",
+      "      ww ww    ",
+      "      w   w    ",
+      "      w   w    ",
+      "      wwwww    ",
     ],
     [ //ceiling
       "               ",
@@ -229,7 +229,10 @@ const maps = (() => {
   }
 
   const isBlocked = (x, y) => {
-    return tiles[map[1][y][x]].blocks;
+    const destination = tiles[map[1][y]?.[x]]?.blocks;
+    const isBlocked = destination === undefined || destination;
+
+    return isBlocked ? true : false;
   }
 
   const getMap = () => map;
