@@ -17,6 +17,9 @@ class Player {
   set y(val){
     this._y = parseInt(val);
   };
+  get loc(){
+    return {x: this.x, y: this.y}
+  }
 }
 
 //--------------------------------------------------
@@ -50,7 +53,9 @@ const display = (() => {
         const url = layer === 1 && player.y == y && player.x == x
         ? "./media/images/sprites/arroba.png"
         : maps.tiles[maps.getMap()[layer][y][x]].url;
-        layerTiles[i].style.backgroundImage = `url(${url})`;
+        
+        url === null ? layerTiles[i].style.backgroundImage = ""
+        : layerTiles[i].style.backgroundImage = `url(${url})`;
       }
     }
   };
@@ -74,26 +79,24 @@ const board = (() => {
 //--------------------------------------------------
 
 const gameLogic = (() => {
-  const action = {
-    up(){
-      player.y--;
-      display.drawOnBoard(1);
-    },
-    down(){
-      player.y++;
-      display.drawOnBoard(1);
-    },
-    left(){
-      player.x--;
-      display.drawOnBoard(1);
-    },
-    right(){
-      player.x++;
-      display.drawOnBoard(1);
-    }
-  };
+  const move = (dir) => {
+    const to = {x: player.x, y: player.y};
 
-  return { action };
+    dir === "n" ? to.y--
+    : dir === "s" ? to.y++
+    : dir === "w" ? to.x--
+    : dir === "e" ? to.x++
+    : console.log("invalid direction");
+
+    if(!maps.isBlocked(to.x,to.y)) {
+      player.x = to.x;
+      player.y = to.y;
+    };
+
+    display.drawOnBoard(1);
+  }
+
+  return { move };
 })();
 
 //--------------------------------------------------
@@ -102,10 +105,10 @@ const controls = (() => {
   const addListeners = () => {
     window.addEventListener("keydown", (e) => {
       const k = e.key.toLowerCase();
-      k === "arrowup" || k === "w" || k === "8" ? gameLogic.action.up() :
-      k === "arrowdown" || k === "s" || k === "2" ? gameLogic.action.down() :
-      k === "arrowleft" || k === "a" || k === "6" ? gameLogic.action.left() :
-      k === "arrowright" || k === "d" || k === "4" ? gameLogic.action.right() :
+      k === "arrowup" || k === "w" || k === "8" ? gameLogic.move("n") :
+      k === "arrowdown" || k === "s" || k === "2" ? gameLogic.move("s") :
+      k === "arrowleft" || k === "a" || k === "6" ? gameLogic.move("w") :
+      k === "arrowright" || k === "d" || k === "4" ? gameLogic.move("e") :
       console.log(k + " is not binded");
     })
   };
@@ -223,9 +226,13 @@ const maps = (() => {
     },
   }
 
+  const isBlocked = (x, y) => {
+    return tiles[map[1][y][x]].blocks;
+  }
+
   const getMap = () => map;
 
-  return { getMap, tiles };
+  return { getMap, tiles, isBlocked };
 })();
 
 
