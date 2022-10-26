@@ -102,13 +102,19 @@ const gameLogic = (() => {
 //--------------------------------------------------
 
 const controls = (() => {
+  const binds = {
+    north: ["arrowup", "w", "8"],
+    south: ["arrowdown", "s", "2"],
+    west: ["arrowleft", "a", "6"],
+    east: ["arrowright", "d", "4"],
+  };
   const addListeners = () => {
     window.addEventListener("keydown", (e) => {
       const k = e.key.toLowerCase();
-      k === "arrowup" || k === "w" || k === "8" ? gameLogic.move("n") :
-      k === "arrowdown" || k === "s" || k === "2" ? gameLogic.move("s") :
-      k === "arrowleft" || k === "a" || k === "6" ? gameLogic.move("w") :
-      k === "arrowright" || k === "d" || k === "4" ? gameLogic.move("e") :
+      binds.north.includes(k) ? gameLogic.move("n") :
+      binds.south.includes(k) ? gameLogic.move("s") :
+      binds.west.includes(k) ? gameLogic.move("w") :
+      binds.east.includes(k) ? gameLogic.move("e") :
       console.log(k + " is not binded");
     })
   };
