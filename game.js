@@ -5,22 +5,14 @@ class Player {
     this.y = y;
   }
 
-  get x(){
-    return this._x;
-  };
-  get y(){
-    return this._y;
-  };
-  set x(val){
-    this._x = parseInt(val);
-  };
-  set y(val){
-    this._y = parseInt(val);
-  };
-  get loc(){
-    return {x: this.x, y: this.y}
-  }
+  get x(){ return this._x };
+  get y(){ return this._y };
+  set x(val){ this._x = parseInt(val) };
+  set y(val){ this._y = parseInt(val) };
+  get loc(){ return {x: this.x, y: this.y} };
 }
+
+
 
 //--------------------------------------------------
 
@@ -37,10 +29,9 @@ const display = (() => {
       for(let j = 0; j < board.getSize() ; j++){
         const tile = document.createElement("div");
         tile.classList.add("tile");
-  
-        i === 0 ? dom.layer0.appendChild(tile) :
-        i === 1 ? dom.layer1.appendChild(tile) :
-        dom.layer2.appendChild(tile);
+
+        const layer = i === 0 ? dom.layer0 : i === 1 ? dom.layer1 : dom.layer2;
+        layer.appendChild(tile);
       }
     }
   };
@@ -50,18 +41,19 @@ const display = (() => {
     for(let y = 0; y < board.getHeight() ;y++){
       for(let x = 0; x < board.getWidth(); x++){
         const i = x + ( y * board.getWidth() );
-        const url = layer === 1 && player.y == y && player.x == x
-        ? "./media/images/sprites/arroba.png"
+        const playerIsHere = layer === 1 && player.y == y && player.x == x;
+        const url = playerIsHere ? "./media/images/sprites/arroba.png"
         : maps.tiles[maps.getMap()[layer][y][x]].url;
         
-        url === null ? layerTiles[i].style.backgroundImage = ""
-        : layerTiles[i].style.backgroundImage = `url(${url})`;
+        layerTiles[i].style.backgroundImage = url === null ?  "" : `url(${url})`;
       }
     }
   };
 
   return { createBoard, drawOnBoard };
 })();
+
+
 
 //--------------------------------------------------
 
@@ -75,6 +67,8 @@ const board = (() => {
 
   return { getWidth, getHeight, getSize };
 })();
+
+
 
 //--------------------------------------------------
 
@@ -99,32 +93,34 @@ const gameLogic = (() => {
   return { move };
 })();
 
+
+
 //--------------------------------------------------
 
 const controls = (() => {
   const binds = {
     north: ["arrowup", "w", "8"],
     south: ["arrowdown", "s", "2"],
-    west: ["arrowleft", "a", "6"],
-    east: ["arrowright", "d", "4"],
+    west: ["arrowleft", "a", "4"],
+    east: ["arrowright", "d", "6"],
   };
   const addListeners = () => {
     window.addEventListener("keydown", (e) => {
       const k = e.key.toLowerCase();
-      binds.north.includes(k) ? gameLogic.move("n") :
-      binds.south.includes(k) ? gameLogic.move("s") :
-      binds.west.includes(k) ? gameLogic.move("w") :
-      binds.east.includes(k) ? gameLogic.move("e") :
-      console.log(k + " is not binded");
-    })
+      if(binds.north.includes(k)) gameLogic.move("n")
+      else if (binds.south.includes(k)) gameLogic.move("s")
+      else if(binds.west.includes(k)) gameLogic.move("w")
+      else if(binds.east.includes(k)) gameLogic.move("e")
+    });
   };
 
   return { addListeners };
 })();
 
+
+
 //--------------------------------------------------
 
-// ╔ ╚ ╝ ╗ ║ ═ ╩ ╦ ╠ ╣ ╬
 const maps = (() => {
   const map = [
     [ //floor
@@ -147,17 +143,17 @@ const maps = (() => {
     [ //walls
       "               ",
       "               ",
-      "  ww  wwww ww  ",
-      "            w  ",
+      "  wwwwwwwwwww  ",
+      "  w         w  ",
       "  w            ",
-      "            w  ",
+      "  w         w  ",
       "  wwwww  wwww  ",
       "               ",
       "               ",
       "               ",
       "               ",
-      "            w  ",
-      "            w  ",
+      "        ww ww  ",
+      "        w   w  ",
       "        wwwww  ",
       "               ",
     ],
@@ -246,7 +242,6 @@ const maps = (() => {
 //--------------------------------------------------
 
 //run on start
-// const player = Player("Jason");
 const player = new Player("Jason", 4, 4);
 
 display.createBoard();
