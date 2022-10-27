@@ -32,7 +32,7 @@ export const uI = (() => {
         const tile = document.createElement("div");
         tile.classList.add("tile");
 
-        const layer = i === 0 ? dom.layer0 : i === 1 ? dom.layer1 : dom.layer2;
+        const layer = dom[`layer${i}`];
         layer.appendChild(tile);
       }
     }
@@ -48,11 +48,8 @@ export const uI = (() => {
         const playerUrl = "./media/images/sprites/arroba.png"
         const url = isPlayerHere ? playerUrl : gameLogic.getTile(layer, x, y);
         if(layer === 2) {
-          if(gameLogic.haveCeiling(layer, x, y)){
-            layerTiles[i].style.backgroundColor = "rgba(0, 0, 0, .25)";
-          } else {
-            layerTiles[i].style.backgroundColor = "";
-          }
+          const color = gameLogic.haveCeiling(layer, x, y) ? "rgba(0, 0, 0, .25)" : "";
+          layerTiles[i].style.backgroundColor = color;
         } else {
           layerTiles[i].style.backgroundImage = url === null ?  "" : `url(${url})`;
         }
