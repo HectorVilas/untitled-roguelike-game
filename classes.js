@@ -1,13 +1,9 @@
 export class Player {
-  constructor(name, x, y) {
+  constructor(name, pos) {
     this.name = name;
-    this.x = x;
-    this.y = y;
+    this.pos = pos;
   }
 
-  get x(){ return this._x };
-  get y(){ return this._y };
-  set x(val){ this._x = parseInt(val) };
-  set y(val){ this._y = parseInt(val) };
-  get loc(){ return {x: this.x, y: this.y} };
+  get pos(){ return this._pos };
+  set pos(val){ this._pos = val };
 }
