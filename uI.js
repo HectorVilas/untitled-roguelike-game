@@ -27,8 +27,8 @@ export const uI = (() => {
 
   function createBoard(){
     for(let i = 0; i < 3; i++){
-      const boardSize = gameLogic.getBoardWidth() * gameLogic.getBoardHeight();
-      for(let j = 0; j < boardSize ; j++){
+      const size = gameLogic.getBoardSize().x * gameLogic.getBoardSize().y;
+      for(let j = 0; j < size ; j++){
         const tile = document.createElement("div");
         tile.classList.add("tile");
 
@@ -40,9 +40,9 @@ export const uI = (() => {
 
   function drawOnBoard(layer){
     const layerTiles = document.querySelectorAll(`#layer${layer} .tile`);
-    for(let y = 0; y < gameLogic.getBoardHeight() ;y++){
-      for(let x = 0; x < gameLogic.getBoardWidth(); x++){
-        const i = x + ( y * gameLogic.getBoardWidth() );
+    for(let y = 0; y < gameLogic.getBoardSize().x ;y++){
+      for(let x = 0; x < gameLogic.getBoardSize().y; x++){
+        const i = x + ( y * gameLogic.getBoardSize().x );
         const playerPos = {x: gameLogic.getPlayer().x, y: gameLogic.getPlayer().y};
         const isPlayerHere = layer === 1 && playerPos.y == y && playerPos.x == x;
         const playerUrl = "./media/images/sprites/arroba.png"

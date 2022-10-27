@@ -2,22 +2,19 @@ import { maps } from "./maps.js";
 import { Player } from "./classes.js";
 
 export const gameLogic = (() => {
-  const boardWidth = 15;
-  const boardHeight = 15;
+  const boardSize = { x: 15, y:15 };
 
-  const getBoardWidth = () => boardWidth;
-  const getBoardHeight = () => boardHeight;
+  const getBoardSize = () => boardSize;
   const getTile = (layer, x, y) => maps.tiles[maps.getMap()[layer][y][x]].url;
   const haveCeiling = (layer, x, y) => maps.getMap()[layer][y][x] === "c";
   const getPlayer = () => player;
   const move = (dir) => {
     const to = {x: player.x, y: player.y};
 
-    dir === "n" ? to.y--
-    : dir === "s" ? to.y++
-    : dir === "w" ? to.x--
-    : dir === "e" ? to.x++
-    : console.log("invalid direction");
+    if(dir === "n") to.y--
+    else if(dir === "s") to.y++
+    else if(dir === "w") to.x--
+    else if(dir === "e") to.x++
 
     if(!maps.isBlocked(to.x,to.y)) {
       player.x = to.x;
@@ -25,7 +22,7 @@ export const gameLogic = (() => {
     };
   };
 
-  return { getBoardWidth, getBoardHeight, getTile, getPlayer, haveCeiling, move };
+  return { getBoardSize, getTile, getPlayer, haveCeiling, move };
 })();
 
 const player = new Player("Jason", 4, 4);
