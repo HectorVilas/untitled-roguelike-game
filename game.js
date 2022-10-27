@@ -16,17 +16,33 @@ class Player {
 
 //--------------------------------------------------
 
-const display = (() => {
+const uI = (() => {
   const dom = {
     board: document.querySelector("#board"),
     layer0: document.querySelector("#layer0"),
     layer1: document.querySelector("#layer1"),
     layer2: document.querySelector("#layer2"),
   };
+  const binds = {
+    north: ["arrowup", "w", "8"],
+    south: ["arrowdown", "s", "2"],
+    west: ["arrowleft", "a", "4"],
+    east: ["arrowright", "d", "6"],
+  };
+
+  const addListeners = () => {
+    window.addEventListener("keydown", (e) => {
+      const k = e.key.toLowerCase();
+      if(binds.north.includes(k)) gameLogic.move("n")
+      else if (binds.south.includes(k)) gameLogic.move("s")
+      else if(binds.west.includes(k)) gameLogic.move("w")
+      else if(binds.east.includes(k)) gameLogic.move("e")
+    });
+  };
 
   function createBoard(){
     for(let i = 0; i < 3; i++){
-      for(let j = 0; j < board.getSize() ; j++){
+      for(let j = 0; j < gameLogic.getBoardSize() ; j++){
         const tile = document.createElement("div");
         tile.classList.add("tile");
 
@@ -38,41 +54,30 @@ const display = (() => {
 
   function drawOnBoard(layer){
     const layerTiles = document.querySelectorAll(`#layer${layer} .tile`);
-    for(let y = 0; y < board.getHeight() ;y++){
-      for(let x = 0; x < board.getWidth(); x++){
-        const i = x + ( y * board.getWidth() );
+    for(let y = 0; y < gameLogic.getBoardHeight() ;y++){
+      for(let x = 0; x < gameLogic.getBoardWidth(); x++){
+        const i = x + ( y * gameLogic.getBoardWidth() );
         const playerIsHere = layer === 1 && player.y == y && player.x == x;
         const url = playerIsHere ? "./media/images/sprites/arroba.png"
-        : maps.tiles[maps.getMap()[layer][y][x]].url;
+        : gameLogic.getTile(layer, x, y);
         
         layerTiles[i].style.backgroundImage = url === null ?  "" : `url(${url})`;
       }
     }
   };
 
-  return { createBoard, drawOnBoard };
+  return { createBoard, drawOnBoard, addListeners };
 })();
 
-
-
-//--------------------------------------------------
-
-const board = (() => {
-  const width = 15;
-  const height = 15;
-
-  const getWidth = () => width;
-  const getHeight = () => height;
-  const getSize = () => width * height;
-
-  return { getWidth, getHeight, getSize };
-})();
-
-
-
-//--------------------------------------------------
 
 const gameLogic = (() => {
+  const boardWidth = 15;
+  const boardHeight = 15;
+
+  const getBoardWidth = () => boardWidth;
+  const getBoardHeight = () => boardHeight;
+  const getBoardSize = () => boardWidth * boardHeight;
+  const getTile = (layer, x, y) => maps.tiles[maps.getMap()[layer][y][x]].url;
   const move = (dir) => {
     const to = {x: player.x, y: player.y};
 
@@ -87,34 +92,10 @@ const gameLogic = (() => {
       player.y = to.y;
     };
 
-    display.drawOnBoard(1);
+    uI.drawOnBoard(1);
   }
 
-  return { move };
-})();
-
-
-
-//--------------------------------------------------
-
-const controls = (() => {
-  const binds = {
-    north: ["arrowup", "w", "8"],
-    south: ["arrowdown", "s", "2"],
-    west: ["arrowleft", "a", "4"],
-    east: ["arrowright", "d", "6"],
-  };
-  const addListeners = () => {
-    window.addEventListener("keydown", (e) => {
-      const k = e.key.toLowerCase();
-      if(binds.north.includes(k)) gameLogic.move("n")
-      else if (binds.south.includes(k)) gameLogic.move("s")
-      else if(binds.west.includes(k)) gameLogic.move("w")
-      else if(binds.east.includes(k)) gameLogic.move("e")
-    });
-  };
-
-  return { addListeners };
+  return { getBoardWidth, getBoardHeight, getBoardSize, getTile, move };
 })();
 
 
@@ -247,7 +228,7 @@ const maps = (() => {
 //run on start
 const player = new Player("Jason", 4, 4);
 
-display.createBoard();
-controls.addListeners();
-display.drawOnBoard(0);
-display.drawOnBoard(1);
+uI.createBoard();
+uI.addListeners();
+uI.drawOnBoard(0);
+uI.drawOnBoard(1);
