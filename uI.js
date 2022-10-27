@@ -27,7 +27,8 @@ export const uI = (() => {
 
   function createBoard(){
     for(let i = 0; i < 3; i++){
-      for(let j = 0; j < gameLogic.getBoardSize() ; j++){
+      const boardSize = gameLogic.getBoardWidth() * gameLogic.getBoardHeight();
+      for(let j = 0; j < boardSize ; j++){
         const tile = document.createElement("div");
         tile.classList.add("tile");
 

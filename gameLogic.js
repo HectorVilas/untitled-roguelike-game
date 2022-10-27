@@ -7,7 +7,6 @@ export const gameLogic = (() => {
 
   const getBoardWidth = () => boardWidth;
   const getBoardHeight = () => boardHeight;
-  const getBoardSize = () => boardWidth * boardHeight;
   const getTile = (layer, x, y) => maps.tiles[maps.getMap()[layer][y][x]].url;
   const getPlayer = () => player;
   const move = (dir) => {
@@ -25,7 +24,7 @@ export const gameLogic = (() => {
     };
   };
 
-  return { getBoardWidth, getBoardHeight, getBoardSize, getTile, getPlayer, move };
+  return { getBoardWidth, getBoardHeight, getTile, getPlayer, move };
 })();
 
 const player = new Player("Jason", 4, 4);
