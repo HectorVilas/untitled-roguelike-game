@@ -43,11 +43,19 @@ export const uI = (() => {
     for(let y = 0; y < gameLogic.getBoardHeight() ;y++){
       for(let x = 0; x < gameLogic.getBoardWidth(); x++){
         const i = x + ( y * gameLogic.getBoardWidth() );
-        const playerIsHere = layer === 1 && gameLogic.getPlayer().y == y && gameLogic.getPlayer().x == x;
-        const url = playerIsHere ? "./media/images/sprites/arroba.png"
-        : gameLogic.getTile(layer, x, y);
-        
-        layerTiles[i].style.backgroundImage = url === null ?  "" : `url(${url})`;
+        const playerPos = {x: gameLogic.getPlayer().x, y: gameLogic.getPlayer().y};
+        const isPlayerHere = layer === 1 && playerPos.y == y && playerPos.x == x;
+        const playerUrl = "./media/images/sprites/arroba.png"
+        const url = isPlayerHere ? playerUrl : gameLogic.getTile(layer, x, y);
+        if(layer === 2) {
+          if(gameLogic.haveCeiling(layer, x, y)){
+            layerTiles[i].style.backgroundColor = "rgba(0, 0, 0, .25)";
+          } else {
+            layerTiles[i].style.backgroundColor = "";
+          }
+        } else {
+          layerTiles[i].style.backgroundImage = url === null ?  "" : `url(${url})`;
+        }
       }
     }
   };
@@ -59,3 +67,4 @@ uI.createBoard();
 uI.addListeners();
 uI.drawOnBoard(0);
 uI.drawOnBoard(1);
+uI.drawOnBoard(2);
