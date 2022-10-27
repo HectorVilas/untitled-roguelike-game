@@ -43,7 +43,7 @@ export const uI = (() => {
     for(let y = 0; y < gameLogic.getBoardSize().x ;y++){
       for(let x = 0; x < gameLogic.getBoardSize().y; x++){
         const i = x + ( y * gameLogic.getBoardSize().x );
-        const playerPos = {x: gameLogic.getPlayer().x, y: gameLogic.getPlayer().y};
+        const playerPos = {x: gameLogic.getPlayer().pos.x, y: gameLogic.getPlayer().pos.y};
         const isPlayerHere = layer === 1 && playerPos.y == y && playerPos.x == x;
         const playerUrl = "./media/images/sprites/arroba.png"
         const url = isPlayerHere ? playerUrl : gameLogic.getTile(layer, x, y);

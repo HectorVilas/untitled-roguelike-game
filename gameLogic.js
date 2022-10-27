@@ -17,7 +17,7 @@ export const gameLogic = (() => {
   }
   
   const move = (dir) => {
-    const to = {x: player.x, y: player.y};
+    const to = {...player.pos};
 
     if(dir === "n") to.y--
     else if(dir === "s") to.y++
@@ -25,12 +25,11 @@ export const gameLogic = (() => {
     else if(dir === "e") to.x++
 
     if(!isBlocked(to.x,to.y)) {
-      player.x = to.x;
-      player.y = to.y;
+      player.pos = to;
     };
   };
   
   return { getBoardSize, getTile, getPlayer, haveCeiling, move };
 })();
 
-const player = new Player("Jason", 4, 4);
+const player = new Player("Jason", {x:4, y:4});
