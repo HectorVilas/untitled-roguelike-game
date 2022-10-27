@@ -8,6 +8,14 @@ export const gameLogic = (() => {
   const getTile = (layer, x, y) => maps.tiles[maps.getMap()[layer][y][x]].url;
   const haveCeiling = (layer, x, y) => maps.getMap()[layer][y][x] === "c";
   const getPlayer = () => player;
+  
+  const isBlocked = (x, y) => {
+    const destinationBlocks = maps.tiles[maps.getMap()[1][y]?.[x]]?.blocks;
+    const isBlocked = destinationBlocks === undefined || destinationBlocks;
+
+    return isBlocked ? true : false;
+  }
+  
   const move = (dir) => {
     const to = {x: player.x, y: player.y};
 
@@ -16,12 +24,12 @@ export const gameLogic = (() => {
     else if(dir === "w") to.x--
     else if(dir === "e") to.x++
 
-    if(!maps.isBlocked(to.x,to.y)) {
+    if(!isBlocked(to.x,to.y)) {
       player.x = to.x;
       player.y = to.y;
     };
   };
-
+  
   return { getBoardSize, getTile, getPlayer, haveCeiling, move };
 })();
 

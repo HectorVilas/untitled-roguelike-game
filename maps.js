@@ -95,7 +95,7 @@ export const maps = (() => {
       url: "./media/images/tiles/dirt-path.jpg",
       name: "dirt path",
       blocks: false,
-      flamable: true,
+      flamable: false,
     },
     "c": {
       url: null,
@@ -103,16 +103,9 @@ export const maps = (() => {
       blocks: false,
       flamable: true,
     },
-  }
-
-  const isBlocked = (x, y) => {
-    const destination = tiles[map[1][y]?.[x]]?.blocks;
-    const isBlocked = destination === undefined || destination;
-
-    return isBlocked ? true : false;
-  }
+  };
 
   const getMap = () => map;
 
-  return { getMap, tiles, isBlocked };
+  return { getMap, tiles };
 })();
