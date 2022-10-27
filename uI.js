@@ -21,6 +21,7 @@ export const uI = (() => {
       else if (binds.south.includes(k)) gameLogic.move("s")
       else if(binds.west.includes(k)) gameLogic.move("w")
       else if(binds.east.includes(k)) gameLogic.move("e")
+      drawOnBoard(1);
     });
   };
 
@@ -53,3 +54,7 @@ export const uI = (() => {
   return { createBoard, drawOnBoard, addListeners };
 })();
 
+uI.createBoard();
+uI.addListeners();
+uI.drawOnBoard(0);
+uI.drawOnBoard(1);

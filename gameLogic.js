@@ -1,4 +1,3 @@
-import { uI } from "./uI.js";
 import { maps } from "./maps.js";
 import { Player } from "./classes.js";
 
@@ -24,15 +23,9 @@ export const gameLogic = (() => {
       player.x = to.x;
       player.y = to.y;
     };
-
-    uI.drawOnBoard(1);
-  }
+  };
 
   return { getBoardWidth, getBoardHeight, getBoardSize, getTile, getPlayer, move };
 })();
 
 const player = new Player("Jason", 4, 4);
-uI.createBoard();
-uI.addListeners();
-uI.drawOnBoard(0);
-uI.drawOnBoard(1);
