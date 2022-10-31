@@ -1,4 +1,5 @@
 import { tiles } from "./tiles.js";
+import { maps } from "./maps.js";
 
 export const ui = (() => {
   const boardSize = { width: 15, height: 15 }
@@ -25,5 +26,27 @@ export const ui = (() => {
     }
   };
 
-  return { generateBoard };
+  function refreshBoard(){
+    const layers = ["floor-tiles", "walls", "ceiling"];
+    for(let layer = 0; layer < layers.length; layer++){
+      for(let y = 0; y < boardSize.height; y++){
+        for(let x = 0; x < boardSize.width; x++){
+          const tilesInDom = document.querySelectorAll(`.${layers[layer]} .tile`);
+          const coordToIdx = y * boardSize.height + x;
+          const mapChar = maps.testMap[layer][y][x];
+          const tileInfo = tiles?.[layers[layer]]?.[mapChar];
+          
+          if(tileInfo === undefined){
+            tilesInDom[coordToIdx].style.backgroundImage = "";
+          } else {
+            tilesInDom[coordToIdx].style.backgroundImage = `url(${tileInfo.url})`;
+            console.log(tilesInDom[coordToIdx]);
+          }
+          
+        }
+      }
+    }
+  };
+
+  return { generateBoard, refreshBoard };
 })();
