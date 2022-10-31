@@ -29,8 +29,8 @@ body {
   position: absolute;
   inset: 0;
   display: grid;
-  grid-template-rows: repeat(15, 1fr);
-  grid-template-columns: repeat(15, 1fr);
+  /* grid-template-rows: repeat(15, 1fr);
+  grid-template-columns: repeat(15, 1fr); */
 }
 
 .tile {
@@ -46,4 +46,5 @@ body {
 
 /* .tile { outline: 1px solid rgba(217, 173, 115, .5); }
 #layer1 { translate: -.25rem -.25rem; }
-#layer2 { translate: -.5rem -.5rem; } */
+#layer2 { translate: -.5rem -.5rem; }
+#layer3 { translate: -.75rem -.75rem; } */
