@@ -2,7 +2,7 @@ import { tiles } from "./tiles.js";
 import { maps } from "./maps.js";
 
 export const ui = (() => {
-  const boardSize = { width: 15, height: 15 }
+  const boardSize = 15;
   const dom = {
     layer0: document.querySelector("#layer0"), //floor-tiles
     layer1: document.querySelector("#layer1"), //floor-sprites
@@ -14,10 +14,10 @@ export const ui = (() => {
     for(let value in dom) {
       const layer = dom[value];
 
-      layer.style.gridTemplateColumns = `repeat(${boardSize.width}, 1fr)`;
-      layer.style.gridTemplateRows = `repeat(${boardSize.height}, 1fr)`;
+      layer.style.gridTemplateColumns = `repeat(${boardSize}, 1fr)`;
+      layer.style.gridTemplateRows = `repeat(${boardSize}, 1fr)`;
       
-      for(let i = 0; i < boardSize.width * boardSize.height; i++){
+      for(let i = 0; i < boardSize * boardSize; i++){
         const tile = document.createElement("div");
         tile.classList.add("tile");
 
@@ -29,10 +29,10 @@ export const ui = (() => {
   function refreshBoard(){
     const layers = ["floor-tiles", "walls", "ceiling"];
     for(let layer = 0; layer < layers.length; layer++){
-      for(let y = 0; y < boardSize.height; y++){
-        for(let x = 0; x < boardSize.width; x++){
+      for(let y = 0; y < boardSize; y++){
+        for(let x = 0; x < boardSize; x++){
           const tilesInDom = document.querySelectorAll(`.${layers[layer]} .tile`);
-          const coordToIdx = y * boardSize.height + x;
+          const coordToIdx = y * boardSize + x;
           const mapChar = maps.testMap[layer][y][x];
           const tileInfo = tiles?.[layers[layer]]?.[mapChar];
           
@@ -40,7 +40,6 @@ export const ui = (() => {
             tilesInDom[coordToIdx].style.backgroundImage = "";
           } else {
             tilesInDom[coordToIdx].style.backgroundImage = `url(${tileInfo.url})`;
-            console.log(tilesInDom[coordToIdx]);
           }
           
         }
