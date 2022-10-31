@@ -21,3 +21,10 @@ export class Wall extends Tile {
     this.isBlocking = isBlocking;
   }
 };
+
+export class Ceiling extends Tile {
+  constructor(name, url, coverage){
+    super(name, url);
+    this.coverage = coverage;
+  }
+};
