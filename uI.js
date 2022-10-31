@@ -1,3 +1,5 @@
+import { tiles } from "./tiles.js";
+
 export const ui = (() => {
   const boardSize = { width: 15, height: 15 }
   const dom = {
