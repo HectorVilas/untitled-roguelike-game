@@ -1,7 +1,8 @@
 export class Player {
-  constructor(name, pos) {
+  constructor(name, pos, url) {
     this.name = name;
     this.pos = pos;
+    this.url = url;
   }
 
   get pos(){ return this._pos };
