@@ -1,5 +1,4 @@
-import { tiles } from "./tiles.js";
-import { maps } from "./maps.js";
+import { gameLogic } from "./gameLogic.js";
 
 export const ui = (() => {
   let boardSize = 15;
@@ -27,20 +26,18 @@ export const ui = (() => {
   };
 
   function refreshBoard(playerPos){
-    const layers = ["floor-tiles", "walls", "ceiling"];
 
-    for(let layer = 0; layer < layers.length; layer++){
-      const tilesInDom = document.querySelectorAll(`.${layers[layer]} .tile`);
+    for(let layer = 0; layer < 3; layer++){
+      const tilesInDom = document.querySelectorAll(`#layer${layer} .tile`);
 
       for(let y = 0; y < boardSize; y++){
         for(let x = 0; x < boardSize; x++){
           const coordToIdx = y * boardSize + x;
           const offsetX = x + (playerPos.x - Math.floor(boardSize/2));
           const offsetY = y + (playerPos.y - Math.floor(boardSize/2));
-          const mapChar = maps.testMap?.[layer]?.[offsetY]?.[offsetX];
-          const tileInfo = tiles?.[layers[layer]]?.[mapChar];
+          const tileUrl = gameLogic.getTile(layer, offsetX, offsetY)?.url;
+          const image = tileUrl === undefined ? "" : `url(${tileUrl})`;
           
-          const image = tileInfo === undefined ? "" : `url(${tileInfo.url})`;
           tilesInDom[coordToIdx].style.backgroundImage = image;
         }
       }
