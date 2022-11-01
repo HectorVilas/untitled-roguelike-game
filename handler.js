@@ -1,4 +1,4 @@
-import {ui} from "./ui.js";
+import {ui} from "./uI.js";
 import { gameLogic } from "./gameLogic.js";
 import { binds } from "./keyBinds.js"
 
