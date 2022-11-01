@@ -56,7 +56,7 @@ export const ui = (() => {
 
     spriteList.forEach(sprite => {
       const x = sprite.pos.x +  Math.floor(boardSize/2) - player.pos.x;
-      const y = sprite.pos.y * boardSize + Math.floor(boardSize/2) * boardSize - player.pos.y * boardSize;
+      const y = (sprite.pos.y + Math.floor(boardSize/2) - player.pos.y) * boardSize;
       layer[x + y].style.backgroundImage = `url(${sprite.url})`;
     });
   };
