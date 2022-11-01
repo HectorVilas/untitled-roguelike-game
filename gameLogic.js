@@ -15,11 +15,27 @@ export const gameLogic = (() => {
   };
 
   function playerAction(dir){
-    if(dir === "n") player.pos.y--
-    else if(dir === "s") player.pos.y++
-    else if(dir === "e") player.pos.x++
-    else if(dir === "w") player.pos.x--
-  }
+    //this action must be context sensitive. attack if there's an enemy,
+    //walk if there's no entities, use if there's something interactable...
+    //for now it will only walk
+    if(dir === "n") walk(dir)
+    else if(dir === "s") walk(dir)
+    else if(dir === "e") walk(dir)
+    else if(dir === "w") walk(dir)
+  };
 
-  return { player, testDummy, getTile, playerAction };
+  function walk(dir){
+    const to = {...player.pos};
+    if(dir === "n") to.y--
+    else if(dir === "s") to.y++
+    else if(dir === "e") to.x++
+    else if(dir === "w") to.x--;
+    
+    const isBlocked = getTile(1,to.x,to.y)?.isBlocking;
+    const hasGround = getTile(0,to.x,to.y) !== undefined;
+    
+    if(!isBlocked && hasGround) player.pos = to;
+  };
+
+  return { player, testDummy, getTile, playerAction, walk };
 })();
