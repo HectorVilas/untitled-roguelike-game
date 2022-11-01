@@ -1,5 +1,4 @@
 import { Player } from "./classes.js";
-//test
 import { maps } from "./maps.js";
 import { tiles } from "./tiles.js";
 
