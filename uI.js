@@ -29,11 +29,11 @@ export const ui = (() => {
   function refreshBoard(){
     const layers = ["floor-tiles", "walls", "ceiling"];
     for(let layer = 0; layer < layers.length; layer++){
+      const tilesInDom = document.querySelectorAll(`.${layers[layer]} .tile`);
       for(let y = 0; y < boardSize; y++){
         for(let x = 0; x < boardSize; x++){
-          const tilesInDom = document.querySelectorAll(`.${layers[layer]} .tile`);
           const coordToIdx = y * boardSize + x;
-          const mapChar = maps.testMap[layer][y][x];
+          const mapChar = maps.testMap?.[layer]?.[y]?.[x];
           const tileInfo = tiles?.[layers[layer]]?.[mapChar];
           
           if(tileInfo === undefined){
