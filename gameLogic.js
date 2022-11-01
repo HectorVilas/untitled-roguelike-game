@@ -14,5 +14,12 @@ export const gameLogic = (() => {
     return values
   };
 
-  return { player, testDummy, getTile };
+  function playerAction(dir){
+    if(dir === "n") player.pos.y--
+    else if(dir === "s") player.pos.y++
+    else if(dir === "e") player.pos.x++
+    else if(dir === "w") player.pos.x--
+  }
+
+  return { player, testDummy, getTile, playerAction };
 })();
