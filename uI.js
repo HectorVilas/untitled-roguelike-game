@@ -2,7 +2,7 @@ import { tiles } from "./tiles.js";
 import { maps } from "./maps.js";
 
 export const ui = (() => {
-  const boardSize = 15;
+  let boardSize = 15;
   const dom = {
     layer0: document.querySelector("#layer0"), //floor-tiles
     layer1: document.querySelector("#layer1"), //floor-sprites
@@ -26,26 +26,40 @@ export const ui = (() => {
     }
   };
 
-  function refreshBoard(){
+  function refreshBoard(playerPos){
     const layers = ["floor-tiles", "walls", "ceiling"];
+
     for(let layer = 0; layer < layers.length; layer++){
       const tilesInDom = document.querySelectorAll(`.${layers[layer]} .tile`);
+
       for(let y = 0; y < boardSize; y++){
         for(let x = 0; x < boardSize; x++){
           const coordToIdx = y * boardSize + x;
-          const mapChar = maps.testMap?.[layer]?.[y]?.[x];
+          const offsetX = x + (playerPos.x - Math.floor(boardSize/2));
+          const offsetY = y + (playerPos.y - Math.floor(boardSize/2));
+          const mapChar = maps.testMap?.[layer]?.[offsetY]?.[offsetX];
           const tileInfo = tiles?.[layers[layer]]?.[mapChar];
           
-          if(tileInfo === undefined){
-            tilesInDom[coordToIdx].style.backgroundImage = "";
-          } else {
-            tilesInDom[coordToIdx].style.backgroundImage = `url(${tileInfo.url})`;
-          }
-          
+          const image = tileInfo === undefined ? "" : `url(${tileInfo.url})`;
+          tilesInDom[coordToIdx].style.backgroundImage = image;
         }
       }
     }
   };
 
-  return { generateBoard, refreshBoard };
+  function refreshSprites(player, spriteList){
+    const layer = document.querySelectorAll("#layer2 .tile");
+
+    const x = Math.floor(boardSize/2);
+    const y = Math.floor(boardSize/2) * boardSize;
+    layer[x + y].style.backgroundImage = `url(${player.url})`;
+
+    spriteList.forEach(sprite => {
+      const x = sprite.pos.x +  Math.floor(boardSize/2) - player.pos.x;
+      const y = sprite.pos.y * boardSize + Math.floor(boardSize/2) * boardSize - player.pos.y * boardSize;
+      layer[x + y].style.backgroundImage = `url(${sprite.url})`;
+    });
+  };
+
+  return { generateBoard, refreshBoard, refreshSprites };
 })();
