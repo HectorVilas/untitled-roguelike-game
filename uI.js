@@ -37,7 +37,7 @@ export const ui = (() => {
           const offsetY = y + (playerPos.y - Math.floor(boardSize/2));
           const tileUrl = gameLogic.getTile(layer, offsetX, offsetY)?.url;
           const image = tileUrl === undefined ? "" : `url(${tileUrl})`;
-          
+
           tilesInDom[coordToIdx].style.backgroundImage = image;
         }
       }
@@ -45,7 +45,7 @@ export const ui = (() => {
   };
 
   function refreshSprites(player, spriteList){
-    const layer = document.querySelectorAll("#layer2 .tile");
+    const layer = document.querySelectorAll("#layer1 .tile");
 
     const x = Math.floor(boardSize/2);
     const y = Math.floor(boardSize/2) * boardSize;
