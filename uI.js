@@ -57,7 +57,13 @@ export const ui = (() => {
     spriteList.forEach(sprite => {
       const x = sprite.pos.x +  Math.floor(boardSize/2) - player.pos.x;
       const y = (sprite.pos.y + Math.floor(boardSize/2) - player.pos.y) * boardSize;
-      layer[x + y].style.backgroundImage = `url(${sprite.url})`;
+      
+      const onScreenX = x >= 0 && x < boardSize;
+      const onScreenY = y/boardSize >= 0 && y/boardSize < boardSize;
+
+      if(onScreenX && onScreenY) {
+        layer[x + y].style.backgroundImage = `url(${sprite.url})`;
+      }
     });
   };
 
