@@ -17,7 +17,7 @@ I'm still not sure what kind of roguelike I want to make. Something like Catacly
 # Progress:
 I'm writing this readme 6 days after starting, 32 commits later, so the progress will be a resume.
 
-## update
+## update(s) 1
 
 ![](READMEmd/progress001.gif)
 
@@ -83,3 +83,16 @@ I'm not sure how clear I'm expressing my ideas, but you will see once I manage t
 
 ## dev tools
 Once I finally find a way to make the maps the way I want, I need a visual tool to draw maps, to draw chunks. When everything else is ready, I need a visual representation of the *blueprints*, with an input to paste some raw code, load it in the page and then be able to make changes. I also need an output, with also raw code, so it can be copied as a map. `JSON.parse` and `JSON.stringify` must take care of that.
+
+## update 2
+
+I deleted all the code and only left the functions empty. Most of the deleted code wasn't useful, this new way to draw the map was very different, plus I wanted to rewrite other things that worked but felt like bad coding.
+
+![](READMEmd/progress006.gif)
+
+Now, doesn't matter how big or small is the map, the player can walk around, have the camera following them and, as a little extra, other entities that are not part of the array containing the map can be drawn in their respective coordinates, as you can see with the second "@" on the GIF.
+
+The tiles has been replaced with new ones, I've been looking for a software to make tileable images, but only found old, incompatible plugins for modern soft. For now I have some ugly tiles made with Gimp (I'm not an artist), enough for a reference on what is on screen.
+
+### what's next
+Now I have to implement again the collisions, to prevent the player from leaving the map or walk through walls and other obstacles. The previous code was good enough, but I want to make it compatible with any NPC too, not only the player, so I'm writing it again.
