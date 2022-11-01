@@ -1,17 +1,17 @@
 import {ui} from "./ui.js";
 import { gameLogic } from "./gameLogic.js";
+import { binds } from "./keyBinds.js"
 
 ui.generateBoard();
 ui.refreshBoard(gameLogic.player.pos);
 ui.refreshSprites(gameLogic.player, [gameLogic.testDummy]);
 
-//for testing
 window.addEventListener("keydown", (e) => {
   const k = e.key.toLowerCase();
-    if(k == "arrowup") gameLogic.player.pos.y--
-    else if (k == "arrowdown") gameLogic.player.pos.y++
-    else if(k == "arrowleft") gameLogic.player.pos.x--
-    else if(k == "arrowright") gameLogic.player.pos.x++
+    if(binds.north.includes(k)) gameLogic.playerAction("n");
+    else if (binds.south.includes(k)) gameLogic.playerAction("s");
+    else if(binds.west.includes(k)) gameLogic.playerAction("w");
+    else if(binds.east.includes(k)) gameLogic.playerAction("e");
 
     ui.refreshBoard(gameLogic.player.pos);
     ui.refreshSprites(gameLogic.player, [gameLogic.testDummy]);
