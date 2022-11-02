@@ -11,6 +11,12 @@
   <script src="./editor.js" type="module"></script>
 </head>
 <body>
+  <div id="board">
+    <div id="layer0" class="board-layer floor-tiles"></div>
+    <div id="layer1" class="board-layer walls sprites"></div>
+    <div id="layer2" class="board-layer ceiling"></div>
+  </div>
+
   <div class="tiles-list">
     <div class="floor-list">
       <div class="tile-btn floor eraser" data-char=" "></div>
@@ -31,13 +37,6 @@
       <div class="tile-btn ceiling wood" data-char="w"></div>
       <div class="tile-btn ceiling leaves" data-char="l"></div>
     </div>
-  </div>
-
-  <div id="board">
-    <div id="layer0" class="board-layer floor-tiles"></div>
-    <div id="layer1" class="board-layer floor-sprites"></div>
-    <div id="layer2" class="board-layer walls sprites"></div>
-    <div id="layer3" class="board-layer ceiling"></div>
   </div>
 </body>
 </html>
