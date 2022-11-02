@@ -59,6 +59,10 @@ body {
   height: var(--tile-btn-size);
   background-size: 100%;
   background-color: gray;
+}.tiles-list .tile-btn:hover {
+  outline: 3px solid gray;
+}.tiles-list .tile-btn.active {
+  outline: 3px solid white;
 }
 
 .floor-list .tile-btn.wood {background-image: url(./media/images/tiles/floor-wood.png);}
