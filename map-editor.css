@@ -30,8 +30,8 @@ body {
   grid-template-columns: repeat(24, 1fr);
   grid-template-rows: repeat(24, 1fr);
 }
-.tile {
-  outline: 1px solid gray;
+.board-layer:last-child .tile {
+  outline: 1px dashed rgba(0, 0, 0, .5);
 }
 /* - - - - - */
 
@@ -63,6 +63,12 @@ body {
   outline: 3px solid gray;
 }.tiles-list .tile-btn.active {
   outline: 3px solid white;
+}
+.tile-btn.eraser {
+  box-sizing: border-box;
+  background: linear-gradient(-45deg, transparent 45%, red 46% 54%, transparent 55%);
+  border: 5px solid red;
+  border-radius: 50%;
 }
 
 .floor-list .tile-btn.wood {background-image: url(./media/images/tiles/floor-wood.png);}
