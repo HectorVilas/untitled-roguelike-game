@@ -38,7 +38,7 @@ body {
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template-columns: repeat(3, 2fr) 1fr;
+  grid-template-columns: repeat(3, 3fr) 1fr;
   grid-template-rows: 1fr;
   overflow: hidden;
 }
@@ -75,6 +75,22 @@ body {
   border: 5px solid red;
   border-radius: 50%;
 }
+.tiles-list button {
+  background-color: hsl(220, 50%, 20%);
+  color: hsl(220, 30%, 90%);
+  /* color: white; */
+  font-weight: 800;
+  font-size: 1rem;
+  font-family: monospace, Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-size: 1.25rem;
+  border: none;
+  border-radius: .5rem;
+}.tiles-list button:hover {
+  background-color: hsl(220, 50%, 25%);
+}.tiles-list button:active {
+  background-color: hsl(220, 50%, 18%);
+}
+
 
 .floor-list .tile-btn.wood {background-image: url(./media/images/tiles/floor-wood.png);}
 .floor-list .tile-btn.stone {background-image: url(./media/images/tiles/floor-stone.png);}
