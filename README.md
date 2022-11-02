@@ -96,3 +96,42 @@ The tiles has been replaced with new ones, I've been looking for a software to m
 
 ### what's next
 Now I have to implement again the collisions, to prevent the player from leaving the map or walk through walls and other obstacles. The previous code was good enough, but I want to make it compatible with any NPC too, not only the player, so I'm writing it again.
+
+## update 3
+Whoops! I got carried away and forgot to write my progress here. Now the game have collisions. When the player tries to move to certain tile, it will check if it's not blocked and have a floor. If those two conditions are true, then the player can move. There's no NPCs yet, but I guess the way I wrote this function will work with them too.
+
+I also started working on a "dev tool", a map maker:
+
+![](READMEmd/progress007.gif)
+
+After thinking a lot, I found a way to make it possible. It starts with an empty map:
+
+```javascript
+let map = new Array(
+  new Array(24).fill("GGGGGGGGGGGGGGGGGGGGGGGG"),
+  new Array(24).fill("                        "),
+  new Array(24).fill("                        "),
+  );
+  ```
+
+Then, when the user draws on the map, they are not drawing directly on screen, but replacing a char on the map and then the map on screen redraws.
+
+```javascript
+  function editMapTile(argX, argY){
+  if(tools.activeTool === "draw"){
+    const layer = tools.layer;
+    const x = typeof argX === "number" ? argX : this.dataset.x;
+    const y = typeof argY === "number" ? argY : this.dataset.y;
+    const char = tools.tile;
+
+    placeTile(layer, x, y, char);
+  }
+
+  refreshMap();
+};
+```
+
+### what's next
+Why not just draw on the DOM? Simple: this edited map can now be "dumped" with `JSON.stringify` so it can be copied to a new file, then used as a blueprint in the future. Now I have to show it as text on screen, maybe with a modal. How about loading maps? It would require the map as text (copied from the js/json file itself) so `JSON.parse` can turn it back to code.
+
+There's a missing tool right now: an eraser. I need to add one, with `<input type="radio">` so I can select which layer must be cleared.
