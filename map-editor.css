@@ -1,0 +1,70 @@
+:root {
+  --board-size: 500px;
+  --tile-btn-size: 50px;
+}
+
+body {
+  box-sizing: border-box;
+  padding: 1rem;
+  gap: 1rem;
+  display: grid;
+  grid-template-columns: var(--board-size) 1fr;
+  grid-template-rows: 1fr var(--board-size);
+  grid-template-areas: 
+    "tiles ."
+    "board raw";
+} body > div {
+  border: 3px inset gray;
+  box-sizing: border-box;
+}
+
+#board {
+  grid-area: board;
+  width: 100%;
+  height: 100%;
+  background-color: #222;
+}
+.board-layer {
+  display: grid;
+  grid-template-columns: repeat(24, 1fr);
+  grid-template-rows: repeat(24, 1fr);
+}
+.tile {
+  outline: 1px solid gray;
+}
+/* - - - - - */
+
+.tiles-list {
+  grid-area: tiles;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 1fr;
+}
+
+.tiles-list > div {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: flex-start;
+  gap: .5rem;
+  padding: .5rem;
+  background-color: #222;
+  box-sizing: border-box;
+  border: 3px outset gray;
+}
+.tiles-list .tile-btn {
+  width: var(--tile-btn-size);
+  height: var(--tile-btn-size);
+}
+
+.floor-list .tile-btn.wood {background-image: url(./media/images/tiles/floor-wood.png);}
+.floor-list .tile-btn.stone {background-image: url(./media/images/tiles/floor-stone.png);}
+.floor-list .tile-btn.gravel {background-image: url(./media/images/tiles/floor-gravel.png);}
+.floor-list .tile-btn.grass {background-image: url(./media/images/tiles/floor-grass.png);}
+.floor-list .tile-btn.dirt {background-image: url(./media/images/tiles/floor-dirt.png);}
+.wall-list .tile-btn.wood {background-image: url(./media/images/tiles/wall-wood.png);}
+.wall-list .tile-btn.concrete {background-image: url(./media/images/tiles/wall-concrete.png);}
+.wall-list .tile-btn.window {background-image: url(./media/images/tiles/wall-window.png);}
+.ceiling-list .tile-btn.wood {background-image: url(./media/images/tiles/ceiling-built.png);}
+.ceiling-list .tile-btn.leaves {background-image: url(./media/images/tiles/ceiling-leaves.png);}
