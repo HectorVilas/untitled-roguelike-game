@@ -5,10 +5,8 @@ const layers = document.querySelectorAll(".board-layer");
 
 const tools = {
   activeTool: "draw",
-  tiles: {
-    activeLayer: 0,
-    activeTile: "s",
-  }
+  layer: 0,
+  tile: "s",
 };
 
 let map = new Array(
@@ -35,6 +33,27 @@ for(let layer = 0; layer < layers.length; layer++){
   }
 };
 
+const btnFloor = document.querySelectorAll(".floor-list .tile-btn");
+const btnWall = document.querySelectorAll(".wall-list .tile-btn");
+const btnCeiling = document.querySelectorAll(".ceiling-list .tile-btn");
+
+[btnFloor, btnWall,btnCeiling].forEach(btnSet => {
+  btnSet.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const btns = document.querySelectorAll(".tile-btn");
+      btns.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      tools.activeTool = "draw";
+      tools.layer = btn.className.includes("floor") ? 0
+      : btn.className.includes("wall") ? 1 : 2;
+      tools.tile = btn.dataset.char;
+
+      console.log(tools.activeTool, tools.layer, tools.tile);
+    });
+  });
+});
+
 function refreshMap(){
   const layers = ["floor-tiles", "walls", "ceiling"];
 
@@ -55,10 +74,10 @@ function refreshMap(){
 
 function editMapTile(argX, argY){
   if(tools.activeTool === "draw"){
-    const layer = tools.tiles.activeLayer;
+    const layer = tools.layer;
     const x = typeof argX === "number" ? argX : this.dataset.x;
     const y = typeof argY === "number" ? argY : this.dataset.y;
-    const char = tools.tiles.activeTile;
+    const char = tools.tile;
 
     placeTile(layer, x, y, char);
   }
