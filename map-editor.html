@@ -11,6 +11,15 @@
   <script src="./editor.js" type="module"></script>
 </head>
 <body>
+  <dialog class="save-modal">
+    <button class="close-modal">X</button>
+    <textarea></textarea>
+  </dialog>
+  
+  <dialog class="load-modal">
+    <button class="close-modal">X</button>
+  </dialog>
+
   <div id="board">
     <div id="layer0" class="board-layer floor-tiles"></div>
     <div id="layer1" class="board-layer walls sprites"></div>
@@ -38,8 +47,8 @@
       <div class="tile-btn ceiling leaves" data-char="l"></div>
     </div>
     <div class="files">
-      <button class="load">Save</button>
-      <button class="save">Load</button>
+      <button class="load">Load</button>
+      <button class="save">Save</button>
     </div>
   </div>
 </body>
