@@ -1,7 +1,8 @@
 :root {
-  --board-size: 700px;
+  --board-size: min(700px, 100vmin);
   --tools-size: 1fr;
   --tile-btn-size: 50px;
+  --clr-text-light: hsl(220, 30%, 85%);
 }
 
 body {
@@ -12,9 +13,7 @@ body {
   grid-template-rows: var(--board-size) var(--tools-size);
   grid-template-areas: "board" "tools";
   user-select: none;
-} body > div {
-  border: 3px inset gray;
-  box-sizing: border-box;
+  gap: .5rem;
 }
 
 #board {
@@ -43,7 +42,7 @@ body {
   overflow: hidden;
 }
 
-.tiles-list > div {
+.tiles-list > fieldset {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(var(--tile-btn-size), 1fr));
   grid-template-rows: repeat(auto-fill, minmax(var(--tile-btn-size), 1fr));
@@ -53,15 +52,26 @@ body {
   padding: 5px;
   background-color: #222;
   box-sizing: border-box;
-  border: 3px outset gray;
+  border: 3px inset gray;
   overflow: auto;
   scrollbar-width: thin;
 }
+fieldset legend {
+  color: var(--clr-text-light);
+  font-size: .8rem;
+  background-color: #222;
+  border: 2px outset gray;
+}
 .tiles-list .tile-btn {
+  box-sizing: border-box;
   width: var(--tile-btn-size);
   height: var(--tile-btn-size);
   background-size: 100%;
   background-color: gray;
+  padding: .1rem;
+  color: var(--clr-text-light);
+  font-size: .75rem;
+  text-shadow: 1px 1px 1px black;
 }.tiles-list .tile-btn:hover {
   z-index: 2;
   outline: 3px solid green;
@@ -78,7 +88,6 @@ body {
 .tiles-list button {
   background-color: hsl(220, 50%, 20%);
   color: hsl(220, 30%, 90%);
-  /* color: white; */
   font-weight: 800;
   font-size: 1rem;
   font-family: monospace, Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
@@ -103,7 +112,6 @@ dialog {
   border-radius: 1rem;
   box-shadow: .5rem .5rem 1rem black;
   background-color: hsl(220, 60%, 30%);
-  /* display: flex; */
   justify-content: center;
   align-items: center;
   padding: 3rem;
@@ -117,19 +125,26 @@ dialog textarea {
   box-sizing: border-box;
   resize: none;
   background-color: hsl(220, 60%, 40%);
-  color: white;
+  color: var(--clr-text-light);
   font-family: monospace;
+  font-size: .6rem;
 }
 
 dialog button {
   position: absolute;
   font-size: 1rem;
-  width: 30px;
+  width: 1.5rem;
   aspect-ratio: 1/1;
   border-radius: 50%;
   right: 1rem;
   top: 1rem;
+  border: none;
+  background-color: hsl(220, 60%, 40%);
+  color: var(--clr-text-light);
+  font-family: monospace;
 }
+dialog button:hover {background-color: hsl(220, 60%, 50%);}
+dialog button:active {background-color: hsl(220, 60%, 30%);}
 
 .floor-list .tile-btn.wood {background-image: url(./media/images/tiles/floor-wood.png);}
 .floor-list .tile-btn.stone {background-image: url(./media/images/tiles/floor-stone.png);}
