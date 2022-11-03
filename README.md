@@ -1,7 +1,11 @@
 # untitled-roguelike-game
 ![](READMEmd/progress005.gif)
 
-# Play: https://hectorvilas.github.io/untitled-roguelike-game/
+## Play: https://hectorvilas.github.io/untitled-roguelike-game/
+
+## map editor: https://hectorvilas.github.io/untitled-roguelike-game/map-editor
+
+---
 
 Welcome to my new personal project! This time I'm making a roguelike (not to be confused with the real time modern ones).
 
