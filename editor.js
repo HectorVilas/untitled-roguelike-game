@@ -70,7 +70,7 @@ btnLoad.addEventListener("click", () => {
 
 btnSave.addEventListener("click", () => {
   modalSave.showModal();
-  modalSaveOutput.value = JSON.stringify(map);
+  modalSaveOutput.value = JSON.stringify(map, null, 1);
 });
 
 btnUndo.addEventListener("click", undo);
