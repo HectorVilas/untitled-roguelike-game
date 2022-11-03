@@ -135,3 +135,17 @@ Then, when the user draws on the map, they are not drawing directly on screen, b
 Why not just draw on the DOM? Simple: this edited map can now be "dumped" with `JSON.stringify` so it can be copied to a new file, then used as a blueprint in the future. Now I have to show it as text on screen, maybe with a modal. How about loading maps? It would require the map as text (copied from the js/json file itself) so `JSON.parse` can turn it back to code.
 
 There's a missing tool right now: an eraser. I need to add one, with `<input type="radio">` so I can select which layer must be cleared.
+
+## update 4
+I kept working in the editor. Now each layer have a button to erase tiles on it's own layer. It's styled as a prohibited symbol using linear gradient and border, because it's faster than creating an icon.
+
+The board has been moved to the top, and an unused column has been removed from the `grid`. I don't think I would need more stuff on screen.
+
+The tiles list now make use of `grid` with `auto-fill` and it's overflow is automatic. Now I can add any number of tiles.
+
+Then I added *Load* and *Save* buttons. The *load* one only shows it's corresponding modal, it's empty for now. The *Save* one will show the map array as plain text, so it can be copied.
+
+And, finally, I implemented an undo action. There's a button for it, but only can undo once. I may add more levels of undo if I find myself needing it.
+
+### what's next
+I want to automate the tiles showing on the list. It should generate from `JavaScript`, using all the info from `tiles.js`. I also need to investigate how to add line breaks for `JSON.stringify`.
