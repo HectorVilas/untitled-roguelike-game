@@ -6,15 +6,16 @@ const layers = document.querySelectorAll(".board-layer");
 const tools = {
   activeTool: "draw",
   layer: 0,
-  tile: "s",
+  tile: "w",
 };
 
+let mapUndo;
 let map = new Array(
   new Array(24).fill("GGGGGGGGGGGGGGGGGGGGGGGG"),
   new Array(24).fill("                        "),
   new Array(24).fill("                        "),
   );
-  
+
 for(let layer = 0; layer < layers.length; layer++){
   for(let y = 0; y < 24; y++){
     for(let x = 0; x < 24; x++){
@@ -48,12 +49,11 @@ const btnCeiling = document.querySelectorAll(".ceiling-list .tile-btn");
       tools.layer = btn.className.includes("floor") ? 0
       : btn.className.includes("wall") ? 1 : 2;
       tools.tile = btn.dataset.char;
-
-      console.log(tools.activeTool, tools.layer, tools.tile);
     });
   });
 });
 
+const btnUndo = document.querySelector("button.undo");
 const btnLoad = document.querySelector("button.load");
 const btnSave = document.querySelector("button.save");
 const modalSave = document.querySelector(".save-modal");
@@ -73,6 +73,7 @@ btnSave.addEventListener("click", () => {
   modalSaveOutput.value = JSON.stringify(map);
 });
 
+btnUndo.addEventListener("click", undo);
 
 
 function refreshMap(){
@@ -94,6 +95,10 @@ function refreshMap(){
 }
 
 function editMapTile(argX, argY){
+  if(typeof argX !== "number") {
+    mapUndo = JSON.parse(JSON.stringify(map));
+    btnUndo.classList.add("active");
+  }
   if(tools.activeTool === "draw"){
     const layer = tools.layer;
     const x = typeof argX === "number" ? argX : this.dataset.x;
@@ -110,7 +115,14 @@ function placeTile(layer, x, y, char){
   const stringToArray = map[layer][y].split("");
   stringToArray[x] = char;
   map[layer][y] = stringToArray.join("");
-}
+};
+
+function undo(){
+  if(mapUndo === undefined) return;
+  map = JSON.parse(JSON.stringify(mapUndo));
+  btnUndo.classList.remove("active");
+  refreshMap();
+};
 
 window.addEventListener("mousedown", () => mousedown = true);
 window.addEventListener("mouseup", () => mousedown = false);
