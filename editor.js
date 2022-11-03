@@ -60,12 +60,29 @@ const modalSave = document.querySelector(".save-modal");
 const modalLoad = document.querySelector(".load-modal");
 const modalClose = document.querySelectorAll(".close-modal");
 const modalSaveOutput = document.querySelector(".save-modal textarea");
+const modalLoadInput = document.querySelector(".load-modal textarea");
+const modalLoadBtnLoad = document.querySelector(".btn-load");
+
 modalClose.forEach(btn => btn.addEventListener("click", () => {
   [modalSave, modalLoad].forEach(modal => modal.close())
-}))
+}));
+
+modalLoadBtnLoad.addEventListener("click", () => {
+  const mapToLoad = JSON.parse(modalLoadInput.value);
+  if(mapToLoad.length === map.length) {
+    map = mapToLoad;
+    refreshMap();
+    modalLoad.close();
+  } else {
+    modalLoadInput.value = "";
+    const err = "THE MAP MUST CONTAIN 3 ARRAYS WITH STRINGS AS CONTENT";
+    modalLoadInput.placeholder = err;
+  };
+})
 
 btnLoad.addEventListener("click", () => {
   modalLoad.showModal();
+  modalLoadInput.value = "";
 });
 
 btnSave.addEventListener("click", () => {
