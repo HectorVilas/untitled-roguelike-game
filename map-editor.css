@@ -1,5 +1,5 @@
 :root {
-  --board-size: 750px;
+  --board-size: 700px;
   --tools-size: 1fr;
   --tile-btn-size: 50px;
 }
@@ -90,9 +90,13 @@ body {
 }.tiles-list button:active {
   background-color: hsl(220, 50%, 18%);
 }
+.tiles-list button.undo.active {
+  background-color: hsl(220, 70%, 40%);
+}
 
 
 dialog {
+  box-sizing: border-box;
   width: 500px;
   height: 700px;
   border: none;
@@ -102,14 +106,19 @@ dialog {
   /* display: flex; */
   justify-content: center;
   align-items: center;
+  padding: 3rem;
+  overflow: hidden;
 }
 dialog textarea {
-  width: 90%;
-  height: 90%;
+  width: 100%;
+  height: 100%;
   border-radius: .5rem;
   padding: .5rem;
   box-sizing: border-box;
   resize: none;
+  background-color: hsl(220, 60%, 40%);
+  color: white;
+  font-family: monospace;
 }
 
 dialog button {
