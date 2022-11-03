@@ -54,6 +54,27 @@ const btnCeiling = document.querySelectorAll(".ceiling-list .tile-btn");
   });
 });
 
+const btnLoad = document.querySelector("button.load");
+const btnSave = document.querySelector("button.save");
+const modalSave = document.querySelector(".save-modal");
+const modalLoad = document.querySelector(".load-modal");
+const modalClose = document.querySelectorAll(".close-modal");
+const modalSaveOutput = document.querySelector(".save-modal textarea");
+modalClose.forEach(btn => btn.addEventListener("click", () => {
+  [modalSave, modalLoad].forEach(modal => modal.close())
+}))
+
+btnLoad.addEventListener("click", () => {
+  modalLoad.showModal();
+});
+
+btnSave.addEventListener("click", () => {
+  modalSave.showModal();
+  modalSaveOutput.value = JSON.stringify(map);
+});
+
+
+
 function refreshMap(){
   const layers = ["floor-tiles", "walls", "ceiling"];
 
