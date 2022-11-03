@@ -149,3 +149,17 @@ And, finally, I implemented an undo action. There's a button for it, but only ca
 
 ### what's next
 I want to automate the tiles showing on the list. It should generate from `JavaScript`, using all the info from `tiles.js`. I also need to investigate how to add line breaks for `JSON.stringify`.
+
+## update 5
+> This repository has reached the 100 commits! So much work has been done on this one, but it's still a very, very early prototype.
+
+The output to save the map now have line breaks. It will make it easier to read, even if that goes against the reason for the existence of this tool. Then I replaced the divs for the tools with `<fieldset>`s so I can add a `<legend>` to specify what kind of tile/menu is that. The tiles now have it's own name on it, to make it less confusing.
+
+And, the best of all, now the load modal have a `<textarea>` to paste any saved map and load it on the editor!
+
+![](READMEmd/progress008.gif)
+
+If the format is incorrect, an error will be logged on console. I don't know how to check it first before trying to parse the text. If the format is valid, it will check it's length with the current map. If those are the same, the map gets loaded, but if the lengths differ, it will clear the text and add a placeholder as an error message.
+
+### what's next
+I think this tool is done, now I need more tiles and other assets (like furiture), but first I still need to automate the tile buttons generation. I'll try to find a way to make it possible.
