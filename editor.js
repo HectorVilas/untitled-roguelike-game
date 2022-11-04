@@ -7,15 +7,20 @@ let map = new Array(
   new Array(24).fill("                        "),
 );
 
+
+
 const display = (() => {
   const dom = {
     board: {
       layers: document.querySelectorAll(".board-layer"),
     },
     tiles: {
-      btnFloor: document.querySelectorAll(".floor-list .tile-btn"),
-      btnWall: document.querySelectorAll(".wall-list .tile-btn"),
-      btnCeiling: document.querySelectorAll(".ceiling-list .tile-btn"),
+      floorList: document.querySelectorAll(".floor-list"),
+      wallList: document.querySelectorAll(".wall-list"),
+      ceilingList: document.querySelectorAll(".ceiling-list"),
+      btnFloor: undefined,
+      btnWall: undefined,
+      btnCeiling: undefined,
     },
     modal: {
       save: document.querySelector(".save-modal"),
@@ -57,6 +62,11 @@ const display = (() => {
   };
 
   function addListeners(){
+    //reassign selectors for items generated from Js
+    dom.tiles.btnFloor = document.querySelectorAll(".floor-list .tile-btn");
+    dom.tiles.btnWall = document.querySelectorAll(".wall-list .tile-btn");
+    dom.tiles.btnCeiling = document.querySelectorAll(".ceiling-list .tile-btn");
+
     [dom.tiles.btnFloor, dom.tiles.btnWall, dom.tiles.btnCeiling].forEach(btnSet => {
       btnSet.forEach(btn => {
         btn.addEventListener("click", () => {
@@ -122,7 +132,39 @@ const display = (() => {
       }
     }
   }
-  return { dom, createBoard, addListeners, refreshMap }
+
+  function placeTiles(){
+    const floors = tiles["floor-tiles"];
+    const walls = tiles["walls"];
+    const ceilings = tiles["ceiling"];
+    let isActiveSet = false;
+
+    [floors, walls, ceilings].forEach(group => {
+      for(const item in group){
+        const groupClass = group === floors ? "floor"
+        : group === walls ? "wall" : "ceiling";
+
+        const listClass = group === floors ? "floor-list"
+        : group === walls ? "wall-list" : "ceiling-list";
+        
+        let parent = document.querySelector(`.${listClass}`);
+        
+        const tile = document.createElement("div");
+        tile.classList.add("tile-btn", groupClass, group[item].name);
+        if(!isActiveSet) {
+          tile.classList.add("active");
+          isActiveSet = true;
+        }
+        tile.dataset.char = item;
+        tile.style.backgroundImage = `url(${group[item].url})`;
+        tile.innerText = group[item].name;
+
+        parent.appendChild(tile)
+      }
+    })
+  };
+
+  return { dom, createBoard, addListeners, refreshMap, placeTiles }
 })();
 
 
@@ -171,6 +213,7 @@ const editor = (() => {
 
 
 //run on start
+display.placeTiles();
 display.createBoard();
 display.addListeners();
 display.refreshMap();
