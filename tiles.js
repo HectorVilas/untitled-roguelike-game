@@ -1,7 +1,6 @@
 import { Tile, Wall, Ceiling } from "./classes.js";
 
 export const tiles = {
-  " ": new Tile("empty", null, false),
   "floor-tiles": {
     "w": new Tile("wood", "./media/images/tiles/floor-wood.png"),
     "s": new Tile("stone", "./media/images/tiles/floor-stone.png"),
