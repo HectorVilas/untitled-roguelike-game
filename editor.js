@@ -1,5 +1,11 @@
 import { tiles } from "./tiles.js";
 
+let mapUndo;
+let map = new Array(
+  new Array(24).fill("GGGGGGGGGGGGGGGGGGGGGGGG"),
+  new Array(24).fill("                        "),
+  new Array(24).fill("                        "),
+);
 
 const display = (() => {
   const dom = {
@@ -27,13 +33,15 @@ const display = (() => {
   };
 
   function createBoard(){
+    const lastLayer = dom.board.layers.length-1
+    
     for(let layer = 0; layer < dom.board.layers.length; layer++){
       for(let y = 0; y < 24; y++){
         for(let x = 0; x < 24; x++){
           const tile = document.createElement("div");
           tile.classList.add("tile");
           
-          if(layer === dom.board.layers.length-1){
+          if(layer === lastLayer){
             tile.dataset.x = x;
             tile.dataset.y = y;
             tile.addEventListener("mousedown", editor.editMapTile);
@@ -70,8 +78,8 @@ const display = (() => {
     
     dom.modal.modalLoadBtnLoad.addEventListener("click", () => {
       const mapToLoad = JSON.parse(dom.modal.modalLoadInput.value);
-      if(mapToLoad.length === editor.map.length) {
-        editor.map = mapToLoad;
+      if(mapToLoad.length === map.length) {
+        map = mapToLoad;
         refreshMap();
         dom.modal.modalLoad.close();
       } else {
@@ -88,7 +96,7 @@ const display = (() => {
     
     dom.editor.btnSave.addEventListener("click", () => {
       dom.modal.modalSave.showModal();
-      dom.modal.modalSaveOutput.value = JSON.stringify(editor.map, null, 1);
+      dom.modal.modalSaveOutput.value = JSON.stringify(map, null, 1);
     });
     
     dom.editor.btnUndo.addEventListener("click", editor.undo);
@@ -106,8 +114,7 @@ const display = (() => {
       for(let y = 0; y < 24; y++){
         for(let x = 0; x < 24; x++){
           const coordToIdx = y * 24 + x;
-          const char = editor.map[layer][y][x];
-          if(y == 0 && x == 0)console.log(editor.map[0][0]);
+          const char = map[layer][y][x];
           const url = tiles[layers[layer]]?.[char]?.url || "";
   
           tilesInDom[coordToIdx].style.backgroundImage = `url(${url})`;
@@ -129,12 +136,6 @@ const editor = (() => {
     tile: "w",
   };
 
-  let mapUndo;
-  let map = new Array(
-    new Array(24).fill("GGGGGGGGGGGGGGGGGGGGGGGG"),
-    new Array(24).fill("                        "),
-    new Array(24).fill("                        "),
-  );
 
   function editMapTile(argX, argY){
     if(typeof argX !== "number") {
@@ -165,7 +166,7 @@ const editor = (() => {
     display.refreshMap();
   };
 
-  return { active, mousedown, map, editMapTile, undo }
+  return { active, mousedown, editMapTile, undo }
 })();
 
 
