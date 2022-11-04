@@ -1,149 +1,175 @@
 import { tiles } from "./tiles.js";
 
-let mousedown = false;
-const layers = document.querySelectorAll(".board-layer");
 
-const tools = {
-  activeTool: "draw",
-  layer: 0,
-  tile: "w",
-};
+const display = (() => {
+  const dom = {
+    board: {
+      layers: document.querySelectorAll(".board-layer"),
+    },
+    tiles: {
+      btnFloor: document.querySelectorAll(".floor-list .tile-btn"),
+      btnWall: document.querySelectorAll(".wall-list .tile-btn"),
+      btnCeiling: document.querySelectorAll(".ceiling-list .tile-btn"),
+    },
+    modal: {
+      modalSave: document.querySelector(".save-modal"),
+      modalLoad: document.querySelector(".load-modal"),
+      modalClose: document.querySelectorAll(".close-modal"),
+      modalSaveOutput: document.querySelector(".save-modal textarea"),
+      modalLoadInput: document.querySelector(".load-modal textarea"),
+      modalLoadBtnLoad: document.querySelector(".btn-load"),
+    },
+    editor: {
+      btnUndo: document.querySelector("button.undo"),
+      btnLoad: document.querySelector("button.load"),
+      btnSave: document.querySelector("button.save"),
+    },
+  };
 
-let mapUndo;
-let map = new Array(
-  new Array(24).fill("GGGGGGGGGGGGGGGGGGGGGGGG"),
-  new Array(24).fill("                        "),
-  new Array(24).fill("                        "),
+  function createBoard(){
+    for(let layer = 0; layer < dom.board.layers.length; layer++){
+      for(let y = 0; y < 24; y++){
+        for(let x = 0; x < 24; x++){
+          const tile = document.createElement("div");
+          tile.classList.add("tile");
+          
+          if(layer === dom.board.layers.length-1){
+            tile.dataset.x = x;
+            tile.dataset.y = y;
+            tile.addEventListener("mousedown", editor.editMapTile);
+            tile.addEventListener("mouseenter", () => {
+              if(editor.mousedown) editor.editMapTile(x,y)
+            });
+          };
+    
+          dom.board.layers[layer].appendChild(tile);
+        }
+      }
+    }
+  };
+
+  function addListeners(){
+    [dom.tiles.btnFloor, dom.tiles.btnWall, dom.tiles.btnCeiling].forEach(btnSet => {
+      btnSet.forEach(btn => {
+        btn.addEventListener("click", () => {
+          const btns = document.querySelectorAll(".tile-btn");
+          btns.forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+    
+          editor.active.activeTool = "draw";
+          editor.active.layer = btn.className.includes("floor") ? 0
+          : btn.className.includes("wall") ? 1 : 2;
+          editor.active.tile = btn.dataset.char;
+        });
+      });
+    });
+    
+    dom.modal.modalClose.forEach(btn => btn.addEventListener("click", () => {
+      [dom.modal.modalSave, dom.modal.modalLoad].forEach(modal => modal.close())
+    }));
+    
+    dom.modal.modalLoadBtnLoad.addEventListener("click", () => {
+      const mapToLoad = JSON.parse(dom.modal.modalLoadInput.value);
+      if(mapToLoad.length === editor.map.length) {
+        editor.map = mapToLoad;
+        refreshMap();
+        dom.modal.modalLoad.close();
+      } else {
+        dom.modal.modalLoadInput.value = "";
+        const err = "THE MAP MUST CONTAIN 3 ARRAYS WITH STRINGS AS CONTENT";
+        dom.modal.modalLoadInput.placeholder = err;
+      };
+    })
+    
+    dom.editor.btnLoad.addEventListener("click", () => {
+      dom.modal.modalLoad.showModal();
+      dom.modal.modalLoadInput.value = "";
+    });
+    
+    dom.editor.btnSave.addEventListener("click", () => {
+      dom.modal.modalSave.showModal();
+      dom.modal.modalSaveOutput.value = JSON.stringify(editor.map, null, 1);
+    });
+    
+    dom.editor.btnUndo.addEventListener("click", editor.undo);
+    
+    window.addEventListener("mousedown", () => editor.mousedown = true);
+    window.addEventListener("mouseup", () => editor.mousedown = false);
+  };
+
+  function refreshMap(){
+    const layers = ["floor-tiles", "walls", "ceiling"];
+  
+    for(let layer = 0; layer < layers.length; layer++){
+      const tilesInDom = document.querySelectorAll(`#layer${layer} .tile`);
+  
+      for(let y = 0; y < 24; y++){
+        for(let x = 0; x < 24; x++){
+          const coordToIdx = y * 24 + x;
+          const char = editor.map[layer][y][x];
+          if(y == 0 && x == 0)console.log(editor.map[0][0]);
+          const url = tiles[layers[layer]]?.[char]?.url || "";
+  
+          tilesInDom[coordToIdx].style.backgroundImage = `url(${url})`;
+        }
+      }
+    }
+  }
+  return { dom, createBoard, addListeners, refreshMap }
+})();
+
+
+
+const editor = (() => {
+  
+  let mousedown = false;
+  const active = {
+    activeTool: "draw",
+    layer: 0,
+    tile: "w",
+  };
+
+  let mapUndo;
+  let map = new Array(
+    new Array(24).fill("GGGGGGGGGGGGGGGGGGGGGGGG"),
+    new Array(24).fill("                        "),
+    new Array(24).fill("                        "),
   );
 
-for(let layer = 0; layer < layers.length; layer++){
-  for(let y = 0; y < 24; y++){
-    for(let x = 0; x < 24; x++){
-      const tile = document.createElement("div");
-      tile.classList.add("tile");
-      
-      if(layer === layers.length-1){
-        tile.dataset.x = x;
-        tile.dataset.y = y;
-        tile.addEventListener("mousedown", editMapTile);
-        tile.addEventListener("mouseenter", () => {if(mousedown) editMapTile(x,y)});
-      }
-
-      layers[layer].appendChild(tile);
+  function editMapTile(argX, argY){
+    if(typeof argX !== "number") {
+      mapUndo = JSON.parse(JSON.stringify(map));
+      display.dom.editor.btnUndo.classList.add("active");
     }
-  }
-};
-
-const btnFloor = document.querySelectorAll(".floor-list .tile-btn");
-const btnWall = document.querySelectorAll(".wall-list .tile-btn");
-const btnCeiling = document.querySelectorAll(".ceiling-list .tile-btn");
-
-[btnFloor, btnWall,btnCeiling].forEach(btnSet => {
-  btnSet.forEach(btn => {
-    btn.addEventListener("click", () => {
-      const btns = document.querySelectorAll(".tile-btn");
-      btns.forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-
-      tools.activeTool = "draw";
-      tools.layer = btn.className.includes("floor") ? 0
-      : btn.className.includes("wall") ? 1 : 2;
-      tools.tile = btn.dataset.char;
-    });
-  });
-});
-
-const btnUndo = document.querySelector("button.undo");
-const btnLoad = document.querySelector("button.load");
-const btnSave = document.querySelector("button.save");
-const modalSave = document.querySelector(".save-modal");
-const modalLoad = document.querySelector(".load-modal");
-const modalClose = document.querySelectorAll(".close-modal");
-const modalSaveOutput = document.querySelector(".save-modal textarea");
-const modalLoadInput = document.querySelector(".load-modal textarea");
-const modalLoadBtnLoad = document.querySelector(".btn-load");
-
-modalClose.forEach(btn => btn.addEventListener("click", () => {
-  [modalSave, modalLoad].forEach(modal => modal.close())
-}));
-
-modalLoadBtnLoad.addEventListener("click", () => {
-  const mapToLoad = JSON.parse(modalLoadInput.value);
-  if(mapToLoad.length === map.length) {
-    map = mapToLoad;
-    refreshMap();
-    modalLoad.close();
-  } else {
-    modalLoadInput.value = "";
-    const err = "THE MAP MUST CONTAIN 3 ARRAYS WITH STRINGS AS CONTENT";
-    modalLoadInput.placeholder = err;
+    if(active.activeTool === "draw"){
+      const layer = active.layer;
+      const x = typeof argX === "number" ? argX : this.dataset.x;
+      const y = typeof argY === "number" ? argY : this.dataset.y;
+      const char = active.tile;
+  
+      placeTile(layer, x, y, char);
+    }
+    display.refreshMap();
   };
-})
 
-btnLoad.addEventListener("click", () => {
-  modalLoad.showModal();
-  modalLoadInput.value = "";
-});
+  function placeTile(layer, x, y, char){
+    const stringToArray = map[layer][y].split("");
+    stringToArray[x] = char;
+    map[layer][y] = stringToArray.join("");
+  };
+  
+  function undo(){
+    if(mapUndo === undefined) return;
+    map = JSON.parse(JSON.stringify(mapUndo));
+    display.dom.editor.btnUndo.classList.remove("active");
+    display.refreshMap();
+  };
 
-btnSave.addEventListener("click", () => {
-  modalSave.showModal();
-  modalSaveOutput.value = JSON.stringify(map, null, 1);
-});
-
-btnUndo.addEventListener("click", undo);
-
-
-function refreshMap(){
-  const layers = ["floor-tiles", "walls", "ceiling"];
-
-  for(let layer = 0; layer < 3; layer++){
-    const tilesInDom = document.querySelectorAll(`#layer${layer} .tile`);
-
-    for(let y = 0; y < 24; y++){
-      for(let x = 0; x < 24; x++){
-        const coordToIdx = y * 24 + x;
-        const char = map[layer][y][x];
-        const url = tiles[layers[layer]]?.[char]?.url || "";
-
-        tilesInDom[coordToIdx].style.backgroundImage = `url(${url})`;
-      }
-    }
-  }
-}
-
-function editMapTile(argX, argY){
-  if(typeof argX !== "number") {
-    mapUndo = JSON.parse(JSON.stringify(map));
-    btnUndo.classList.add("active");
-  }
-  if(tools.activeTool === "draw"){
-    const layer = tools.layer;
-    const x = typeof argX === "number" ? argX : this.dataset.x;
-    const y = typeof argY === "number" ? argY : this.dataset.y;
-    const char = tools.tile;
-
-    placeTile(layer, x, y, char);
-  }
-
-  refreshMap();
-};
-
-function placeTile(layer, x, y, char){
-  const stringToArray = map[layer][y].split("");
-  stringToArray[x] = char;
-  map[layer][y] = stringToArray.join("");
-};
-
-function undo(){
-  if(mapUndo === undefined) return;
-  map = JSON.parse(JSON.stringify(mapUndo));
-  btnUndo.classList.remove("active");
-  refreshMap();
-};
-
-window.addEventListener("mousedown", () => mousedown = true);
-window.addEventListener("mouseup", () => mousedown = false);
+  return { active, mousedown, map, editMapTile, undo }
+})();
 
 
 //run on start
-refreshMap();
+display.createBoard();
+display.addListeners();
+display.refreshMap();
