@@ -156,14 +156,3 @@ dialog .btn-load {
 }
 dialog button:hover {background-color: hsl(220, 60%, 50%);}
 dialog button:active {background-color: hsl(220, 60%, 30%);}
-
-.floor-list .tile-btn.wood {background-image: url(./media/images/tiles/floor-wood.png);}
-.floor-list .tile-btn.stone {background-image: url(./media/images/tiles/floor-stone.png);}
-.floor-list .tile-btn.gravel {background-image: url(./media/images/tiles/floor-gravel.png);}
-.floor-list .tile-btn.grass {background-image: url(./media/images/tiles/floor-grass.png);}
-.floor-list .tile-btn.dirt {background-image: url(./media/images/tiles/floor-dirt.png);}
-.wall-list .tile-btn.wood {background-image: url(./media/images/tiles/wall-wood.png);}
-.wall-list .tile-btn.concrete {background-image: url(./media/images/tiles/wall-concrete.png);}
-.wall-list .tile-btn.window {background-image: url(./media/images/tiles/wall-window.png);}
-.ceiling-list .tile-btn.wood {background-image: url(./media/images/tiles/ceiling-built.png);}
-.ceiling-list .tile-btn.leaves {background-image: url(./media/images/tiles/ceiling-leaves.png);}
