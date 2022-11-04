@@ -167,3 +167,49 @@ If the format is incorrect, an error will be logged on console. I don't know how
 
 ### what's next
 I think this tool is done, now I need more tiles and other assets (like furiture), but first I still need to automate the tile buttons generation. I'll try to find a way to make it possible.
+
+## update 5
+I've moved the code to two modular functions, now it's lest chaotic to follow, but then I had to move the `map` and `mapUndo` variables to the "global" scope (the `editor.js` is a module itself, I'm not sure how to call this scope).
+
+with those variables inside a module, once the user *undo* or *load* a map (when the code applies `map = JSON.parse(JSON.stringify(mapUndo));`), the `display` module stops receiving the new map values, while the `editor` module containing the map will work but not send any new data to the other module.
+
+I don't know what happened here, I've spent like an hour finding the problem and then another hour trying to figure it out, but I ended moving those to the "global" scope and problem solved.
+
+I still want to know what happened. the `editor` module had the map variable on `return`. Maybe a getter and a setter would solve this, but still makes no sense, because before being modified by *load* or *undo* it can be read and edited with no problem.
+
+Next, I worked on the tile buttons. Instead of writing them in the `HTML` each time I change the list, it will just read this list, get all the data needed from each item and place itself in their respective lists. Any future addition in this list will be automatically added to the editor.
+
+```javascript
+function placeTiles(){
+  const floors = tiles["floor-tiles"];
+  const walls = tiles["walls"];
+  const ceilings = tiles["ceiling"];
+  let isActiveSet = false;
+
+  [floors, walls, ceilings].forEach(group => {
+    for(const item in group){
+      const groupClass = group === floors ? "floor"
+      : group === walls ? "wall" : "ceiling";
+
+      const listClass = group === floors ? "floor-list"
+      : group === walls ? "wall-list" : "ceiling-list";
+      
+      let parent = document.querySelector(`.${listClass}`);
+      
+      const tile = document.createElement("div");
+      tile.classList.add("tile-btn", groupClass, group[item].name);
+      if(!isActiveSet) {
+        tile.classList.add("active");
+        isActiveSet = true;
+      }
+      tile.dataset.char = item;
+      tile.style.backgroundImage = `url(${group[item].url})`;
+      tile.innerText = group[item].name;
+
+      parent.appendChild(tile)
+    }
+  })
+};
+```
+
+The code is not that complex, but took me some time to figure out how to get the `key:value`. It wasn't hard, but had to investigate. I found lots of methods, but the one used here was the best one.
