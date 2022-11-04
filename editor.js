@@ -18,12 +18,12 @@ const display = (() => {
       btnCeiling: document.querySelectorAll(".ceiling-list .tile-btn"),
     },
     modal: {
-      modalSave: document.querySelector(".save-modal"),
-      modalLoad: document.querySelector(".load-modal"),
-      modalClose: document.querySelectorAll(".close-modal"),
-      modalSaveOutput: document.querySelector(".save-modal textarea"),
-      modalLoadInput: document.querySelector(".load-modal textarea"),
-      modalLoadBtnLoad: document.querySelector(".btn-load"),
+      save: document.querySelector(".save-modal"),
+      load: document.querySelector(".load-modal"),
+      close: document.querySelectorAll(".close-modal"),
+      saveOutput: document.querySelector(".save-modal textarea"),
+      loadInput: document.querySelector(".load-modal textarea"),
+      loadBtnLoad: document.querySelector(".btn-load"),
     },
     editor: {
       btnUndo: document.querySelector("button.undo"),
@@ -34,7 +34,7 @@ const display = (() => {
 
   function createBoard(){
     const lastLayer = dom.board.layers.length-1
-    
+
     for(let layer = 0; layer < dom.board.layers.length; layer++){
       for(let y = 0; y < 24; y++){
         for(let x = 0; x < 24; x++){
@@ -72,31 +72,31 @@ const display = (() => {
       });
     });
     
-    dom.modal.modalClose.forEach(btn => btn.addEventListener("click", () => {
-      [dom.modal.modalSave, dom.modal.modalLoad].forEach(modal => modal.close())
+    dom.modal.close.forEach(btn => btn.addEventListener("click", () => {
+      [dom.modal.save, dom.modal.load].forEach(modal => modal.close())
     }));
     
-    dom.modal.modalLoadBtnLoad.addEventListener("click", () => {
-      const mapToLoad = JSON.parse(dom.modal.modalLoadInput.value);
+    dom.modal.loadBtnLoad.addEventListener("click", () => {
+      const mapToLoad = JSON.parse(dom.modal.loadInput.value);
       if(mapToLoad.length === map.length) {
         map = mapToLoad;
         refreshMap();
-        dom.modal.modalLoad.close();
+        dom.modal.load.close();
       } else {
-        dom.modal.modalLoadInput.value = "";
+        dom.modal.loadInput.value = "";
         const err = "THE MAP MUST CONTAIN 3 ARRAYS WITH STRINGS AS CONTENT";
-        dom.modal.modalLoadInput.placeholder = err;
+        dom.modal.loadInput.placeholder = err;
       };
     })
     
     dom.editor.btnLoad.addEventListener("click", () => {
-      dom.modal.modalLoad.showModal();
-      dom.modal.modalLoadInput.value = "";
+      dom.modal.load.showModal();
+      dom.modal.loadInput.value = "";
     });
     
     dom.editor.btnSave.addEventListener("click", () => {
-      dom.modal.modalSave.showModal();
-      dom.modal.modalSaveOutput.value = JSON.stringify(map, null, 1);
+      dom.modal.save.showModal();
+      dom.modal.saveOutput.value = JSON.stringify(map, null, 1);
     });
     
     dom.editor.btnUndo.addEventListener("click", editor.undo);
