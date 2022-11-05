@@ -37,6 +37,7 @@ body {
   box-sizing: border-box;
   background-size: 100% 100%;
   background-repeat: no-repeat;
+  image-rendering: pixelated;
 }
 
 /* for testing */
