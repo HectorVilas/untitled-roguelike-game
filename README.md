@@ -213,3 +213,29 @@ function placeTiles(){
 ```
 
 The code is not that complex, but took me some time to figure out how to get the `key:value`. It wasn't hard, but had to investigate. I found lots of methods, but the one used here was the best one.
+
+## update 6
+No coding today, but I've been experimenting a little on Codepen and discovered this:
+
+![](READMEmd/progress009.gif)
+
+(Tileset for testing from [here](https://github.com/I-am-Erk/CDDA-Tilesets))
+
+I can make my own tilesets! With those `CSS` lines I can pick any tile from it and, the best part, it will work with any resolution! The only adjust needed is how many tiles columns are.
+
+Yesterday I decided what kind of visual style I want, and remembered that tileset from [CDDA](https://github.com/CleverRaven/Cataclysm-DDA), RetroDays. A minimalistic style with 16 colors would be great. Less details means less complex work just for the visuals, plus the retro and cozy feeling.
+
+Here is what I've been doing today:
+
+![](gfx/tileset.png)
+
+It's my first time making pixel art, and my first time making a tileset, but I think I'm doing fine.
+
+The code for the tile drawing now needs a rework, but having everything on a single image will prevent any late image load while playing.
+
+What I need to do now:
+
+- set tile position for each one on `tileset.js`
+- rewrite the way it's drawn on screen, always using the same image but with different coordinates.
+
+For now I'll keep drawing tiles, then move to sprites. Once I have enough I'll rewrite the tile drawing code.
