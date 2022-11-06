@@ -239,3 +239,14 @@ What I need to do now:
 - rewrite the way it's drawn on screen, always using the same image but with different coordinates.
 
 For now I'll keep drawing tiles, then move to sprites. Once I have enough I'll rewrite the tile drawing code.
+
+## update 7
+I'm still working on the tileset. Revoked, brick and wooden walls are now rearranged and won't contain a window variant. The windows are now separated, so they can be reutilized on a separated layer, no matter the wall type.
+The width of the tileset has been incrased from 8 to 12 tiles:
+at the left are the walls and windows, at the right the floors
+with an empty space for variants.
+
+About the variants, I'm planning on adding an array on each tile info, so depending certain circunstances, the variant will be drawn, so it won't look the same on big areas with the same floor.
+
+### what's next
+As much as I want to go back to code, I still need more wall types, make up my mind with the tile arrangement and make a new spritesheet for characters and props. Once I have enough, I can finally refactor the code so it will draw from a tile/sprite sheet instead of looking for individual images.
