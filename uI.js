@@ -35,10 +35,14 @@ export const ui = (() => {
           const coordToIdx = y * boardSize + x;
           const offsetX = x + (playerPos.x - Math.floor(boardSize/2));
           const offsetY = y + (playerPos.y - Math.floor(boardSize/2));
-          const tileUrl = gameLogic.getTile(layer, offsetX, offsetY)?.url;
-          const image = tileUrl === undefined ? "" : `url(${tileUrl})`;
+          const tile = gameLogic.getTile(layer, offsetX, offsetY);
 
-          tilesInDom[coordToIdx].style.backgroundImage = image;
+          if(tile !== undefined){
+            tilesInDom[coordToIdx].style.backgroundImage = `url(${tile.url})`;
+            tilesInDom[coordToIdx].style.backgroundPosition = `calc(100% - 100% * ${tile.colRow.c}) calc(100% - 100% * ${tile.colRow.r})`;
+          } else {
+            tilesInDom[coordToIdx].style.backgroundImage = "";
+          };
         }
       }
     }
