@@ -10,22 +10,29 @@ export class Player {
 };
 
 export class Tile {
-  constructor(name, url) {
+  constructor(name, url, colRow) {
     this.name = name;
     this.url = url;
+    this.colRow = colRow;
+  }
+};
+
+export class Floor extends Tile {
+  constructor(name, url, colRow){
+    super(name, url, colRow)
   }
 };
 
 export class Wall extends Tile {
-  constructor(name, url, isBlocking) {
-    super(name, url);
+  constructor(name, url, colRow, isBlocking) {
+    super(name, url, colRow);
     this.isBlocking = isBlocking;
   }
 };
 
 export class Ceiling extends Tile {
-  constructor(name, url, coverage){
-    super(name, url);
+  constructor(name, url, colRow, coverage){
+    super(name, url, colRow);
     this.coverage = coverage;
   }
 };
