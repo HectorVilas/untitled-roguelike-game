@@ -4,9 +4,9 @@ export const tiles = {
   "floor-tiles": { //name, url, colRow
     //nature
     "g1": new Floor("scarce grass", "./gfx/tileset.png", { c:13, r:1 }),
-    "g2": new Floor("short grass", "./gfx/tileset.png", { c:13, r:1 }),
-    "g3": new Floor("tall grass", "./gfx/tileset.png", { c:13, r:1 }),
-    "g4": new Floor("overgrown grass", "./gfx/tileset.png", { c:13, r:1 }),
+    "g2": new Floor("short grass", "./gfx/tileset.png", { c:13, r:2 }),
+    "g3": new Floor("tall grass", "./gfx/tileset.png", { c:13, r:3 }),
+    "g4": new Floor("overgrown grass", "./gfx/tileset.png", { c:13, r:4 }),
     "d": new Floor("dirt", "./gfx/tileset.png", { c:13, r:5 }),
     "p": new Floor("pebbles", "./gfx/tileset.png", { c:13, r:6 }),
     //built
