@@ -29,15 +29,13 @@ body {
   position: absolute;
   inset: 0;
   display: grid;
-  /* grid-template-rows: repeat(15, 1fr);
-  grid-template-columns: repeat(15, 1fr); */
 }
 
 .tile {
+  --tileset-width: 24;
   box-sizing: border-box;
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
   image-rendering: pixelated;
+	background-size: calc(100% * var(--tileset-width));
 }
 
 /* for testing */
