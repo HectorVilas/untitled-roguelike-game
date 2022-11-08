@@ -1,13 +1,17 @@
 import { tiles } from "./tiles.js";
+import { getTile } from "./tileHandler.js";
 
+let map;
 let mapUndo;
-let map = new Array(
-  new Array(24).fill("GGGGGGGGGGGGGGGGGGGGGGGG"),
-  new Array(24).fill("                        "),
-  new Array(24).fill("                        "),
+let emptyMap = new Array(
+  new Array(24).fill(new Array(24).fill("g1")),
+  new Array(24).fill(new Array(24).fill(" ")),
+  new Array(24).fill(new Array(24).fill(" ")),
 );
 
-
+//TODO: change for custom testing map later
+//start with an empty map
+map = JSON.parse(JSON.stringify(emptyMap));
 
 const display = (() => {
   const dom = {
@@ -125,9 +129,10 @@ const display = (() => {
         for(let x = 0; x < 24; x++){
           const coordToIdx = y * 24 + x;
           const char = map[layer][y][x];
-          const url = tiles[layers[layer]]?.[char]?.url || "";
-  
+          const tile = getTile(layer, x, y, map)
+          const url = tile?.url || "";
           tilesInDom[coordToIdx].style.backgroundImage = `url(${url})`;
+          if(url !== "") tilesInDom[coordToIdx].style.backgroundPosition = `calc(100% - 100% * ${tile.colRow.c}) calc(100% - 100% * ${tile.colRow.r})`;
         }
       }
     }
@@ -150,13 +155,14 @@ const display = (() => {
         let parent = document.querySelector(`.${listClass}`);
         
         const tile = document.createElement("div");
-        tile.classList.add("tile-btn", groupClass, group[item].name);
+        tile.classList.add("tile-btn", groupClass, group[item].name.split(" ").join("-"));
         if(!isActiveSet) {
           tile.classList.add("active");
           isActiveSet = true;
         }
         tile.dataset.char = item;
         tile.style.backgroundImage = `url(${group[item].url})`;
+        tile.style.backgroundPosition = `calc(100% - 100% * ${group[item].colRow.c}) calc(100% - 100% * ${group[item].colRow.r})`;
         tile.innerText = group[item].name;
 
         parent.appendChild(tile)
@@ -196,9 +202,10 @@ const editor = (() => {
   };
 
   function placeTile(layer, x, y, char){
-    const stringToArray = map[layer][y].split("");
-    stringToArray[x] = char;
-    map[layer][y] = stringToArray.join("");
+    // const stringToArray = map[layer][y].split("");
+    // stringToArray[x] = char;
+    // map[layer][y] = stringToArray.join("");
+    map[layer][y][x] = char;
   };
   
   function undo(){
