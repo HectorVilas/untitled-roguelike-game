@@ -1,5 +1,5 @@
 # untitled-roguelike-game
-![](READMEmd/progress005.gif)
+![](READMEmd/progress011.gif)
 
 ## Play: https://hectorvilas.github.io/untitled-roguelike-game/
 
@@ -295,3 +295,37 @@ NESW
 ```
 
 I plan to check the north and go clockwise and get those strings, so depending on it, the proper wall tile will be chosen.
+
+## update 8
+The branch has been merged with main! Now the game works with a tileset, same for the map editor.
+
+
+What I did:
+
+For the game:
+- rearranged tiles on the tileset
+- adapted the test map to the new way it's drawn and read
+- the game screen is now pixel perfect, and it's size can be changed, same for the number of tiles on screen
+- created a new module to handle the tilesets, moved from GameLogic
+- made the walls change tile depending on the angle, it's neighbor walls will shape it, doesn't matter the type of wall
+
+![](READMEmd/progress012.gif)
+
+For the map editor:
+- adapted the code to read a different type of array
+- the buttons now use the tileset instead of individual images
+- added an optional parameter for the tile handler so it can read both game map and editor map
+- adapted the function to draw on the map
+
+This and some little fixes that won't worth to mention here.
+
+![](READMEmd/progress011.gif)
+
+Now everything works back to normal. It's fascinating how the wall adaptation works on the editor and how fast I can make a map. This will be used to create blueprints, for the map generation.
+
+### what's next
+I should use `Json` for the blueprints and tile properties. For now it can stay as `Js` files.
+
+I also need a lot of new sprites and think how to use windows and doors as sprites with their own behaviours (the player must be able to open, close and break those, and the direction of those must depend on the connected walls).
+
+Once I have some blueprints with windows, doors, furniture, etc, I need to make an overmap, and from this overmap a map will be generated in another variable. There's a LOT of work to do before this prototype becomes a playable game.
