@@ -25,8 +25,7 @@ export const ui = (() => {
       layer.replaceChildren();
       layer.style.gridTemplateColumns = `repeat(${scale.boardSize}, 1fr)`;
       layer.style.gridTemplateRows = `repeat(${scale.boardSize}, 1fr)`;
-      //TODO: try **2
-      for(let i = 0; i < scale.boardSize * scale.boardSize; i++){
+      for(let i = 0; i < scale.boardSize ** 2; i++){
         const tile = document.createElement("div");
         tile.classList.add("tile");
 
