@@ -25,7 +25,7 @@ export const ui = (() => {
       layer.replaceChildren();
       layer.style.gridTemplateColumns = `repeat(${scale.boardSize}, 1fr)`;
       layer.style.gridTemplateRows = `repeat(${scale.boardSize}, 1fr)`;
-      
+      //TODO: try **2
       for(let i = 0; i < scale.boardSize * scale.boardSize; i++){
         const tile = document.createElement("div");
         tile.classList.add("tile");
@@ -78,7 +78,7 @@ export const ui = (() => {
     });
   };
 
-  function domResizePixels(pixelResize){
+  function setDomResizePixels(pixelResize){
     if(pixelResize === -1 && scale.pixelMultiplier === 1) return;
     const tiles = document.querySelectorAll(".tile");
     const board = document.querySelector("#board")
@@ -91,13 +91,12 @@ export const ui = (() => {
       tile.style.height = `${scale.getDomTileSize()}px`; 
     })
   };
-
-  function domBoardTiles(resize){
+  function setDomBoardTiles(resize){
     scale.boardSize += resize;
     generateBoard();
-    domResizePixels(0);
+    setDomResizePixels(0);
   };
 
-  return { generateBoard, refreshBoard, refreshSprites, domResizePixels,
-    domBoardTiles };
+  return { generateBoard, refreshBoard, refreshSprites, setDomResizePixels,
+    setDomBoardTiles };
 })();

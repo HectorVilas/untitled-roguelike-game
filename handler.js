@@ -14,10 +14,10 @@ window.addEventListener("keydown", (e) => {
     else if(binds.west.includes(k)) gameLogic.playerAction("w");
     else if(binds.east.includes(k)) gameLogic.playerAction("e");
     //temporal
-    else if(k === "+") ui.domResizePixels(+1);
-    else if(k === "-") ui.domResizePixels(-1);
-    else if(k === "/") ui.domBoardTiles(+2);
-    else if(k === "*") ui.domBoardTiles(-2);
+    else if(k === "+") ui.setDomResizePixels(+1);
+    else if(k === "-") ui.setDomResizePixels(-1);
+    else if(k === "/") ui.setDomBoardTiles(+2);
+    else if(k === "*") ui.setDomBoardTiles(-2);
 
     ui.refreshBoard(gameLogic.player.pos);
     ui.refreshSprites(gameLogic.player, [gameLogic.testDummy]);
