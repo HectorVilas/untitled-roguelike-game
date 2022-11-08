@@ -17,7 +17,8 @@ export function getTile(layer, x, y, map){
     if(thisMap?.[layer]?.[y-1]?.[x+1] !== " " &&
       thisMap?.[layer]?.[y+1]?.[x+1] !== " " &&
       thisMap?.[layer]?.[y+1]?.[x-1] !== " " &&
-      thisMap?.[layer]?.[y-1]?.[x-1] !== " " ) connected += "+";
+      thisMap?.[layer]?.[y-1]?.[x-1] !== " " &&
+      connected === "nesw") connected += "+";
     
     switch(connected){
       case "n":
