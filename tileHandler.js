@@ -9,22 +9,18 @@ export function getTile(layer, x, y){
   if(char !== undefined && char !== " " && layers[layer] == "walls"){
     values = JSON.parse(JSON.stringify(tiles[layers[layer]][char]));
     let connected = "";
-    if(maps.testMap?.[layer]?.[y-1]?.[x] === char) connected += "n";
-    if(maps.testMap?.[layer]?.[y]?.[x+1] === char) connected += "e";
-    if(maps.testMap?.[layer]?.[y+1]?.[x] === char) connected += "s";
-    if(maps.testMap?.[layer]?.[y]?.[x-1] === char) connected += "w";
-    if(maps.testMap?.[layer]?.[y-1]?.[x+1] === char &&
-      maps.testMap?.[layer]?.[y+1]?.[x+1] === char &&
-      maps.testMap?.[layer]?.[y+1]?.[x-1] === char &&
-      maps.testMap?.[layer]?.[y-1]?.[x-1] === char ) connected += "+";
+    if(maps.testMap?.[layer]?.[y-1]?.[x] !== " ") connected += "n";
+    if(maps.testMap?.[layer]?.[y]?.[x+1] !== " ") connected += "e";
+    if(maps.testMap?.[layer]?.[y+1]?.[x] !== " ") connected += "s";
+    if(maps.testMap?.[layer]?.[y]?.[x-1] !== " ") connected += "w";
+    if(maps.testMap?.[layer]?.[y-1]?.[x+1] !== " " &&
+      maps.testMap?.[layer]?.[y+1]?.[x+1] !== " " &&
+      maps.testMap?.[layer]?.[y+1]?.[x-1] !== " " &&
+      maps.testMap?.[layer]?.[y-1]?.[x-1] !== " " ) connected += "+";
     
     switch(connected){
       case "n":
-        values.colRow.c += 1;
-        break;
       case "s":
-        values.colRow.c += 1;
-        break;
       case "ns":
         values.colRow.c += 1;
         break;
@@ -59,7 +55,7 @@ export function getTile(layer, x, y){
       case "nesw":
         values.colRow.r += 6;
         break;
-        case "nesw+":
+      case "nesw+":
         values.colRow.r += 6;
         values.colRow.c += 1;
         break;
