@@ -250,3 +250,46 @@ About the variants, I'm planning on adding an array on each tile info, so depend
 
 ### what's next
 As much as I want to go back to code, I still need more wall types, make up my mind with the tile arrangement and make a new spritesheet for characters and props. Once I have enough, I can finally refactor the code so it will draw from a tile/sprite sheet instead of looking for individual images.
+
+## update 7
+I created a new branch, rewrote the code, modified the tile properties and now the game shows the tiles from the tileset, a single image.
+
+But I had a problem: Firefox will leave some visible lines between the tiles depending on the scale, even the tiles will have some "bleeding" from the neighbor tile. Opera doesn't have this problem. As I prefer Firefox for personal use, and to have multiple browser compatibility, I've been looking for a solution, experimenting, but without success. I decided to make the board pixel perfect, instead of using dynamic and percentage values, and now it works like a charm. To compensame for any other resolutions, I added two functions to change the pixel size and board scale:
+
+![](READMEmd/progress010.gif)
+
+### what's next
+
+So now I have everything working. My next step will be making the wall adapt depending on the other connecting walls. Instead of a single tile, I have many others depending on the direction of the connecting walls. I need to adapt the code for the next configurations:
+
+
+❌❌❌
+❌✔️❌
+❌❌❌
+
+N        E         S        W
+❌✅❌ ❌❌❌  ❌❌❌  ❌❌❌
+❌✔️❌ ❌✔️✅  ❌✔️❌  ✅✔️❌
+❌❌❌ ❌❌❌  ❌✅❌  ❌❌❌
+
+NS       EW
+❌✅❌ ❌❌❌
+❌✔️❌ ✅✔️✅
+❌✅❌ ❌❌❌
+
+NE       ES        SW       NW
+❌✅❌ ❌❌❌  ❌❌❌  ❌✅❌
+❌✔️✅ ❌✔️✅  ✅✔️❌  ✅✔️❌
+❌❌❌ ❌✅❌  ❌✅❌  ❌❌❌
+
+NEW      NES      ESW     NSW
+❌✅❌ ❌✅❌ ❌❌❌ ❌✅❌
+✅✔️✅ ❌✔️✅ ✅✔️✅ ✅✔️❌
+❌❌❌ ❌✅❌ ❌✅❌ ❌✅❌
+
+NESW
+❌✅❌
+✅✔️✅
+❌✅❌
+
+I plan to check the north and go clockwise and get those strings, so depending on it, the proper wall tile will be chosen.
