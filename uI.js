@@ -2,10 +2,10 @@ import { gameLogic } from "./gameLogic.js";
 
 export const ui = (() => {
   const scale = {
-    boardSize: 21,
+    boardSize: 31,
     tilesetWidth: 24,
     tilePixelRes: 12,
-    pixelMultiplier: 3,
+    pixelMultiplier: 2,
     getDomTileSize: () => scale.tilePixelRes * scale.pixelMultiplier,
     getDomBoardSize: () => scale.getDomTileSize() * scale.boardSize,
   };
