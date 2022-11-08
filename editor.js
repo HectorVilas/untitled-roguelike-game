@@ -181,7 +181,7 @@ const editor = (() => {
   const active = {
     activeTool: "draw",
     layer: 0,
-    tile: "w",
+    tile: "g1",
   };
 
 
@@ -202,9 +202,6 @@ const editor = (() => {
   };
 
   function placeTile(layer, x, y, char){
-    // const stringToArray = map[layer][y].split("");
-    // stringToArray[x] = char;
-    // map[layer][y] = stringToArray.join("");
     map[layer][y][x] = char;
   };
   
