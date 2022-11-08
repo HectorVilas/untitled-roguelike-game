@@ -1,22 +1,23 @@
 import { maps } from "./maps.js";
 import { tiles } from "./tiles.js";
 
-export function getTile(layer, x, y){
+export function getTile(layer, x, y, map){
   const layers = ["floor-tiles", "walls", "ceiling"];
-  const char = maps.testMap?.[layer]?.[y]?.[x];
+  const thisMap = map || maps.testMap;
+  const char = thisMap?.[layer]?.[y]?.[x];
   let values = tiles[layers[layer]][char];
   
   if(char !== undefined && char !== " " && layers[layer] == "walls"){
     values = JSON.parse(JSON.stringify(tiles[layers[layer]][char]));
     let connected = "";
-    if(maps.testMap?.[layer]?.[y-1]?.[x] !== " ") connected += "n";
-    if(maps.testMap?.[layer]?.[y]?.[x+1] !== " ") connected += "e";
-    if(maps.testMap?.[layer]?.[y+1]?.[x] !== " ") connected += "s";
-    if(maps.testMap?.[layer]?.[y]?.[x-1] !== " ") connected += "w";
-    if(maps.testMap?.[layer]?.[y-1]?.[x+1] !== " " &&
-      maps.testMap?.[layer]?.[y+1]?.[x+1] !== " " &&
-      maps.testMap?.[layer]?.[y+1]?.[x-1] !== " " &&
-      maps.testMap?.[layer]?.[y-1]?.[x-1] !== " " ) connected += "+";
+    if(thisMap?.[layer]?.[y-1]?.[x] !== " ") connected += "n";
+    if(thisMap?.[layer]?.[y]?.[x+1] !== " ") connected += "e";
+    if(thisMap?.[layer]?.[y+1]?.[x] !== " ") connected += "s";
+    if(thisMap?.[layer]?.[y]?.[x-1] !== " ") connected += "w";
+    if(thisMap?.[layer]?.[y-1]?.[x+1] !== " " &&
+      thisMap?.[layer]?.[y+1]?.[x+1] !== " " &&
+      thisMap?.[layer]?.[y+1]?.[x-1] !== " " &&
+      thisMap?.[layer]?.[y-1]?.[x-1] !== " " ) connected += "+";
     
     switch(connected){
       case "n":
