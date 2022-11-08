@@ -71,7 +71,11 @@ fieldset legend {
   padding: .1rem;
   color: var(--clr-text-light);
   font-size: .75rem;
+  font-weight: 800;
   text-shadow: 1px 1px 1px black;
+  line-break: anywhere;
+  image-rendering: pixelated;
+  background-size: calc(100% * var(--tileset-width));
 }.tiles-list .tile-btn:hover {
   z-index: 2;
   outline: 3px solid green;
