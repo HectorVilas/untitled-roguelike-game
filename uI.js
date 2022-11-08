@@ -1,4 +1,5 @@
 import { gameLogic } from "./gameLogic.js";
+import { getTile } from "./tileHandler.js";
 
 export const ui = (() => {
   const scale = {
@@ -44,7 +45,7 @@ export const ui = (() => {
           const coordToIdx = y * scale.boardSize + x;
           const offsetX = x + (playerPos.x - Math.floor(scale.boardSize/2));
           const offsetY = y + (playerPos.y - Math.floor(scale.boardSize/2));
-          const tile = gameLogic.getTile(layer, offsetX, offsetY);
+          const tile = getTile(layer, offsetX, offsetY);
 
           if(tile !== undefined){
             tilesInDom[coordToIdx].style.backgroundImage = `url(${tile.url})`;
