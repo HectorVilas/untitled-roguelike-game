@@ -2,8 +2,8 @@
   --tileset-width: 24;
   --tile-res: 12px;
 
-  --board-tiles: 21;
-  --pixel-multiplier: 3;
+  --board-tiles: 31;
+  --pixel-multiplier: 2;
   --tile-size: calc(var(--tile-res) * var(--pixel-multiplier));
   --board-size: calc(var(--tile-size) * var(--board-tiles));
 }
