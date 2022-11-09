@@ -27,9 +27,6 @@ body {
   grid-template-columns: repeat(24, 1fr);
   grid-template-rows: repeat(24, 1fr);
 }
-.board-layer:last-child .tile {
-  outline: 1px dashed rgba(0, 0, 0, .5);
-}
 /* - - - - - */
 
 .tiles-list {
@@ -67,7 +64,7 @@ fieldset legend {
   width: var(--tile-btn-size);
   height: var(--tile-btn-size);
   background-size: 100%;
-  background-color: gray;
+  background-color: darkslateblue;
   padding: .1rem;
   color: var(--clr-text-light);
   font-size: .75rem;
@@ -78,10 +75,11 @@ fieldset legend {
   background-size: calc(100% * var(--tileset-width));
 }.tiles-list .tile-btn:hover {
   z-index: 2;
-  outline: 3px solid green;
+  /* outline: 1px solid green; */
+  scale: 120%;
 }.tiles-list .tile-btn.active {
   z-index: 1;
-  outline: 3px solid greenyellow;
+  outline: 2px solid greenyellow;
 }
 .tile-btn.eraser {
   box-sizing: border-box;
@@ -98,13 +96,19 @@ fieldset legend {
   font-size: 1.25rem;
   border: none;
   border-radius: .5rem;
-}.tiles-list button:hover {
+}.tiles-list button:hover:not(.undo) {
   background-color: hsl(220, 50%, 25%);
-}.tiles-list button:active {
+}.tiles-list button:active:not(.undo) {
   background-color: hsl(220, 50%, 18%);
 }
-.tiles-list button.undo.active {
-  background-color: hsl(220, 70%, 40%);
+.tiles-list button.undo{
+  background-color: hsl(220, 50%, 10%);
+}.tiles-list button.undo.active {
+  background-color: hsl(220, 60%, 40%);
+}.tiles-list button.undo.active:hover {
+  background-color: hsl(220, 70%, 50%);
+}.tiles-list button.undo.active:active {
+  background-color: hsl(220, 70%, 30%);
 }
 
 
