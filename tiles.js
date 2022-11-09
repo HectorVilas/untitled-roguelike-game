@@ -42,5 +42,13 @@ export const tiles = {
   "ceiling": { //name, url, colRow, coverage
     "b": new Ceiling("built","./gfx/tileset.png", { c:15, r:7 }, 100),
     "l": new Ceiling("leaves","./gfx/tileset.png", { c:15, r:8 }, 50),
+    "1": new Ceiling("test","./gfx/tileset.png", { c:7, r:10 }, 50),
+    "2": new Ceiling("test","./gfx/tileset.png", { c:7, r:11 }, 50),
+    "3": new Ceiling("test","./gfx/tileset.png", { c:8, r:10 }, 50),
+    "4": new Ceiling("test","./gfx/tileset.png", { c:8, r:11 }, 50),
+    "5": new Ceiling("test","./gfx/tileset.png", { c:9, r:10 }, 50),
+    "6": new Ceiling("test","./gfx/tileset.png", { c:9, r:11 }, 50),
+    "7": new Ceiling("test","./gfx/tileset.png", { c:10, r:10 }, 50),
+    "8": new Ceiling("test","./gfx/tileset.png", { c:10, r:11 }, 50),
   },
 };
