@@ -20,48 +20,19 @@ export function getTile(layer, x, y, map){
       thisMap?.[layer]?.[y-1]?.[x-1] !== " " &&
       connected === "nesw") connected += "+";
     
-    switch(connected){
-      case "n":
-      case "s":
-      case "ns":
-        values.colRow.c += 1;
-        break;
-      case "ne":
-        values.colRow.r += 3;
-        break;
-      case "es":
-        values.colRow.r += 2;
-        break;
-      case "sw":
-        values.colRow.r += 2;
-        values.colRow.c += 1;
-        break;
-      case "nw":
-        values.colRow.r += 3;
-        values.colRow.c += 1;
-        break;
-      case "new":
-          values.colRow.r += 5;
-          break;
-      case "nes":
-        values.colRow.r += 4;
-        break;
-      case "esw":
-        values.colRow.c += 1;
-        values.colRow.r += 4;
-        break;
-      case "nsw":
-        values.colRow.c += 1;
-        values.colRow.r += 5;
-        break;
-      case "nesw":
-        values.colRow.r += 6;
-        break;
-      case "nesw+":
-        values.colRow.r += 6;
-        values.colRow.c += 1;
-        break;
-    }
+    if(connected === "n"
+    || connected === "s"
+    || connected === "ns") { values.colRow.c += 1;
+    } else if(connected === "ne" ) { values.colRow.r += 3;
+    } else if(connected === "es" ) { values.colRow.r += 2;
+    } else if(connected === "sw" ) { values.colRow.r += 2; values.colRow.c += 1;
+    } else if(connected === "nw" ) { values.colRow.r += 3; values.colRow.c += 1;
+    } else if(connected === "new" ) { values.colRow.r += 5;
+    } else if(connected === "nes" ) { values.colRow.r += 4;
+    } else if(connected === "esw" ) { values.colRow.c += 1; values.colRow.r += 4;
+    } else if(connected === "nsw" ) { values.colRow.c += 1; values.colRow.r += 5;
+    } else if(connected === "nesw" ) { values.colRow.r += 6;
+    } else if(connected === "nesw+" ) { values.colRow.r += 6; values.colRow.c += 1; } 
   };
   
   return values
