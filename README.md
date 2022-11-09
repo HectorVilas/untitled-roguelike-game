@@ -228,6 +228,7 @@ Yesterday I decided what kind of visual style I want, and remembered that tilese
 Here is what I've been doing today:
 
 ![](gfx/tileset.png)
+(this image will always autoupdate)
 
 It's my first time making pixel art, and my first time making a tileset, but I think I'm doing fine.
 
@@ -329,3 +330,17 @@ I should use `Json` for the blueprints and tile properties. For now it can stay 
 I also need a lot of new sprites and think how to use windows and doors as sprites with their own behaviours (the player must be able to open, close and break those, and the direction of those must depend on the connected walls).
 
 Once I have some blueprints with windows, doors, furniture, etc, I need to make an overmap, and from this overmap a map will be generated in another variable. There's a LOT of work to do before this prototype becomes a playable game.
+
+## update 9
+The editor now have 100 levels of undo. Before making this happen, the `mapUndo` was a variable that copied the `map` one. Now `mapUndo` is an array, and it gett a push of `map`. It can store up to 100 map states (taking barely 30mb of ram, so could be higher), deleting the oldest entry when it's `.length` is bigger than 100. When the user undo, then the last entry on `mapUndo` gets copied to `map` and then `.pop()`ed.
+
+About the tileset, I made 2 new walls and easily implemented them on the game with just two lines of code, other already drawn tiles has been added too.
+
+![](READMEmd/progress013.gif)
+
+The fences got dithering on top, to give the illusion that it's not as tall as the other walls (the player may be able to climb it).
+
+The last changes has been replacing the long switch-case for a simple if-ese and then some minor changes to the tilest, to make it look more seamless.
+
+### what's next
+There's two things missing before I can start making blueprints for the map generator: walls/windows and sprites. Those wall openings will require a little change in the sprite drawing, to change it's orientation and connect with others. The sprites (mostly furniture) will only require to be drawn, most of them won't do other than block the path.
