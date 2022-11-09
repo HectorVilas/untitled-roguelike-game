@@ -2,7 +2,7 @@ import { tiles } from "./tiles.js";
 import { getTile } from "./tileHandler.js";
 
 let map;
-let mapUndo;
+let mapUndo = [];
 let emptyMap = new Array(
   new Array(24).fill(new Array(24).fill("g1")),
   new Array(24).fill(new Array(24).fill(" ")),
@@ -110,7 +110,7 @@ const display = (() => {
     
     dom.editor.btnSave.addEventListener("click", () => {
       dom.modal.save.showModal();
-      dom.modal.saveOutput.value = JSON.stringify(map, null, 1);
+      dom.modal.saveOutput.value = JSON.stringify(map/*, null, 1*/);
     });
     
     dom.editor.btnUndo.addEventListener("click", editor.undo);
@@ -187,7 +187,9 @@ const editor = (() => {
 
   function editMapTile(argX, argY){
     if(typeof argX !== "number") {
-      mapUndo = JSON.parse(JSON.stringify(map));
+      mapUndo.push(JSON.parse(JSON.stringify(map)));
+      //prevents mapUndo to use too much memory, 30mb aprox with 100 levels
+      if(mapUndo.length > 100) mapUndo.shift();
       display.dom.editor.btnUndo.classList.add("active");
     }
     if(active.activeTool === "draw"){
@@ -206,9 +208,14 @@ const editor = (() => {
   };
   
   function undo(){
-    if(mapUndo === undefined) return;
-    map = JSON.parse(JSON.stringify(mapUndo));
-    display.dom.editor.btnUndo.classList.remove("active");
+    if(mapUndo === undefined || mapUndo.length < 1) return;
+    map = JSON.parse(JSON.stringify(mapUndo.at(-1)));
+    mapUndo.pop()
+    const btnClass = display.dom.editor.btnUndo.classList;
+    
+    if(mapUndo.length > 0) btnClass.add("active");
+    else btnClass.remove("active")
+
     display.refreshMap();
   };
 
