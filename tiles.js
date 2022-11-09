@@ -25,10 +25,12 @@ export const tiles = {
     "r": new Wall("revoked","./gfx/tileset.png", { c:1, r:1 }, true),
     "b": new Wall("brick","./gfx/tileset.png", { c:3, r:1 }, true),
     "w": new Wall("wood","./gfx/tileset.png", { c:5, r:1 }, true),
+    "g": new Wall("glass","./gfx/tileset.png", { c:1, r:15 }, true),
     //fence
     "fm": new Wall("palisade fence","./gfx/tileset.png", { c:1, r:8 }, true),
     "fb": new Wall("brick fence","./gfx/tileset.png", { c:3, r:8 }, true),
     "fw": new Wall("wood fence","./gfx/tileset.png", { c:5, r:8 }, true),
+    "fwr": new Wall("wire fence","./gfx/tileset.png", { c:3, r:15 }, true),
   },
   "ceiling": { //name, url, colRow, coverage
     "b": new Ceiling("built","./gfx/tileset.png", { c:15, r:7 }, 100),
