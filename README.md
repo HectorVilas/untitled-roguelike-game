@@ -1,9 +1,10 @@
 # untitled-roguelike-game
 ![](READMEmd/progress011.gif)
 
-## Play: https://hectorvilas.github.io/untitled-roguelike-game/
+# Play: https://hectorvilas.github.io/untitled-roguelike-game/
 
 ## map editor: https://hectorvilas.github.io/untitled-roguelike-game/map-editor
+## color palette generator: https://hectorvilas.github.io/untitled-roguelike-game/palette
 
 ---
 
@@ -344,3 +345,12 @@ The last changes has been replacing the long switch-case for a simple if-ese and
 
 ### what's next
 There's two things missing before I can start making blueprints for the map generator: walls/windows and sprites. Those wall openings will require a little change in the sprite drawing, to change it's orientation and connect with others. The sprites (mostly furniture) will only require to be drawn, most of them won't do other than block the path.
+
+## update 10
+I added two furnitures to the game and... I don't like it's look. I need more pixels and more colors.
+
+I've been investigating, watching videos, reading about tilesets. Now I'm working on a 16x16 tileset, but I have nothing to show, because I changed the color palette so many times I redid the little I drew each time. Too many colors is a problem, too little colors is a problem, a missing color is a problem... so I made my own tool: a palette generator (link at the top of this README.md, with the other ones).
+
+![](READMEmd/progress014.gif)
+
+The math on this tool is confusing, I don't know too much about the science behind colors, but I know what each `HSL` value does, so it's enough to try. After trying a lot of combinations (on Codepen, that's why this tool appeared with a single commit) I think I found a sweet spot. Now I'll be able to make my own color palette, and even fine tune a little more with the tool at the right.
