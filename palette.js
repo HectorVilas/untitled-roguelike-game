@@ -1,5 +1,6 @@
 const setColors = document.querySelector("#set-colors");
 const setTones = document.querySelector("#set-tones");
+const setLightInfluence = document.querySelector("#set-light-influence")
 
 const palette = document.querySelector("#palette");
 const gamma = document.querySelector("#gamma");
@@ -21,15 +22,22 @@ function setDefaults(){
   rngLightness.value = 50;
   setColors.value = 6;
   setTones.value = 6;
+  setLightInfluence.value = 1.75;
 }
 
 function keepInRange(){
+  //max
   if(parseInt(setColors.value) > parseInt(setColors.max)){
     setColors.value = setColors.max;
   } 
   if(parseInt(setTones.value) > parseInt(setTones.max)){
     setTones.value = setTones.max;
   }; 
+  if(parseInt(setLightInfluence.value) > parseInt(setLightInfluence.max)){
+    setLightInfluence.value = setLightInfluence.max;
+  }; 
+
+  //min
   if(parseInt(setColors.value) < parseInt(setColors.min)
   || setColors.value == ""){
     setColors.value = setColors.min;
@@ -37,6 +45,10 @@ function keepInRange(){
   if(parseInt(setTones.value) < parseInt(setTones.min)
   || setTones.value == ""){
     setTones.value = setTones.min;
+  }; 
+  if(parseInt(setLightInfluence.value) < parseInt(setLightInfluence.min)
+  || setLightInfluence.value == ""){
+    setLightInfluence.value = setLightInfluence.min;
   }; 
 }
 
@@ -55,7 +67,7 @@ function createPalette(){
     for(let w = 0; w < setColors.value; w++){
       const hue = parseInt(360/setColors.value*w);
       const saturation = parseInt(100/setTones.value*(h+1)*2);
-      const lightness = parseInt(100/setTones.value*h/1.75);
+      const lightness = parseInt(100/setTones.value*h/setLightInfluence.value);
       
       const color = h == 0 ? `hsl(0, 0%, ${parseInt(100/(setColors.value-w))}%)`
       : `hsl(${hue}, ${saturation}%, ${lightness}%)`;
@@ -108,7 +120,7 @@ function setValue(){
 	})
 };
 
-[setColors, setTones].forEach(set => {
+[setColors, setTones, setLightInfluence].forEach(set => {
   set.addEventListener("input", createPalette)
 });
 
