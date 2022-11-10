@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="#" type="image/x-icon">
+  <link rel="stylesheet" href="./palette.css">
+  <script src="./palette.js" defer></script>
+  <title>Palette</title>
+</head>
+<body>
+  <div id="palette-settings">
+    <fieldset>
+      <legend>Colors</legend>
+      <input type="number" id="set-colors" min="3" max="32" value="6">
+    </fieldset>
+    <fieldset>
+      <legend>Tones</legend>
+      <input type="number" id="set-tones" min="3" max="32" value="6">
+    </fieldset>
+  </div>
+
+  <div id="colors-container">
+    <div id="gamma"></div>
+    <div id="palette"></div>
+  </div>
+
+  <div id="hsl">
+    <fieldset>
+      <legend>HUE</legend>
+    <input type="range" id="hue" step="18" max= "360" class="slider" value="0">
+    </fieldset>
+    <fieldset>
+      <legend>Saturation</legend>
+    <input type="range" id="saturation" step="5" max="100" class="slider" value="70">
+    </fieldset>
+    <fieldset>
+      <legend>Lightness</legend>
+    <input type="range" id="lightness" step="5" max="100" class="slider" value="50">
+    </fieldset>
+    <p class="hsl-output">HSL</p>
+    <div class="samples">
+      <div class="sample"></div>
+      <div class="sample"></div>
+      <div class="sample"></div>
+      <div class="sample"></div>
+      <div class="sample"></div>
+    </div>
+  </div>
+
+</body>
+</html>

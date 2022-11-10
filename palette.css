@@ -1,0 +1,96 @@
+body {
+	background-color: darkslateblue;
+	width: 100vw;
+	height: 100vh;
+	margin: 0;
+	display: grid;
+	grid-template-columns: 2fr 1fr;
+	grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "settings ..."
+    "palette hsl";
+}
+
+
+
+/* - - - generated palette - - - */
+
+#palette-settings {
+  grid-area: settings;
+  display: flex;
+}
+#palette-settings fieldset {
+  padding: 3px;
+  flex: auto;
+}
+input[type="number"] {
+  background-color: darkslateblue;
+  color: #ccc;
+  width: 70px;
+}
+
+#colors-container {
+  grid-area: palette;
+	display: grid;
+	width: 100%;
+	height: 100%;
+}
+
+#palette, #gamma {
+	--size: calc(100vmin - 1rem);
+	display: grid;
+}
+
+.tile {
+	color: transparent;
+	color: white;
+	text-shadow: 1px 1px 1px black;
+	font-weight: 900;
+	font-family: monospace;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: .70rem;
+}
+
+
+
+/* - - - color tones - - - */
+
+#hsl {
+  grid-area: hsl;
+	display: grid;
+	grid-template-rows: repeat(4, 1fr) 8fr;
+	align-items: center;
+}
+
+fieldset {
+	display: flex;
+}
+legend {
+	color: #ccc;
+	font-weight: 800;
+	font-size: 1rem;
+}
+
+input[type="range"] {
+	width: 100%;
+}
+
+.hsl-output {
+  margin: 0;
+	background-color: black;
+	color: #ddd;
+	font-size: 1rem;
+	text-align: center;
+	padding: 1rem;
+}
+
+.samples {
+	box-sizing: border-box;
+	width: 100%;
+	height: 100%;
+	background-color: hsl(0, 70%, 50%);
+	display: grid;
+	grid-template-rows: repeat(5, fr);
+}
