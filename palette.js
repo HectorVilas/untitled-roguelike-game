@@ -81,21 +81,22 @@ const colorPalette = (() => {
 })();
 
 const colorPicker = (() => {
-  const samples = document.querySelector(".samples");
-  const samplesAll = document.querySelectorAll(".sample")
+  const samplesAll = document.querySelectorAll(".sample");
   const rngHue = document.querySelector("#hue");
   const rngSaturation = document.querySelector("#saturation");
   const rngLightness = document.querySelector("#lightness");
+  const rngMultiplier = document.querySelector("#multiplier");
   const hslOutput = document.querySelector(".hsl-output");
 
   function setDefaults(){
     rngHue.value = 0;
     rngSaturation.value = 80;
     rngLightness.value = 50;
+    rngMultiplier.value = 10;
   };
 
   function addListeners(){
-    [rngHue, rngSaturation, rngLightness].forEach(val => {
+    [rngHue, rngSaturation, rngLightness, rngMultiplier].forEach(val => {
       val.addEventListener("input", setValue);
     });
   };
@@ -103,16 +104,21 @@ const colorPicker = (() => {
   function setValue(){
     const color = `hsl(${rngHue.value}, ${rngSaturation.value}%, ${rngLightness.value}%)`;
     hslOutput.innerText = color;
-    /*samples.style.backgroundColor = color;*/
     
     samplesAll.forEach((samp, i) => {
+      const h = rngHue.value;
+      const s = parseInt(rngSaturation.value);
+      const l = parseInt(rngLightness.value);
+      const mult = parseInt(rngMultiplier.value);
+
       const tone = [
-        `hsl(${rngHue.value}, ${parseInt(rngSaturation.value)-20}%, ${parseInt(rngLightness.value)+20}%)`,
-        `hsl(${rngHue.value}, ${parseInt(rngSaturation.value)-10}%, ${parseInt(rngLightness.value)+10}%)`,
-        `hsl(${rngHue.value}, ${parseInt(rngSaturation.value)}%, ${parseInt(rngLightness.value)}%)`,
-        `hsl(${rngHue.value}, ${parseInt(rngSaturation.value)+10}%, ${parseInt(rngLightness.value)-10}%)`,
-        `hsl(${rngHue.value}, ${parseInt(rngSaturation.value)+20}%, ${parseInt(rngLightness.value)-20}%)`,
+        `hsl(${h}, ${s-mult*2}%, ${l+mult*2}%)`,
+        `hsl(${h}, ${s-mult}%, ${l+mult}%)`,
+        `hsl(${h}, ${s}%, ${l}%)`,
+        `hsl(${h}, ${s+mult}%, ${l-mult}%)`,
+        `hsl(${h}, ${s+mult*2}%, ${l-mult*2}%)`,
       ];
+      
       samp.style.backgroundColor = tone[i];
     })
   };

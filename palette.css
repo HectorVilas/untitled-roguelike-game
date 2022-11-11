@@ -62,7 +62,7 @@ input[type="number"] {
 #hsl {
   grid-area: hsl;
 	display: grid;
-	grid-template-rows: repeat(4, 1fr) 8fr;
+	grid-template-rows: repeat(5, 1fr) 8fr;
 	align-items: center;
 }
 
