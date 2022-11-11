@@ -1,6 +1,7 @@
 const setColors = document.querySelector("#set-colors");
 const setTones = document.querySelector("#set-tones");
 const setLightInfluence = document.querySelector("#set-light-influence")
+const setSatfluence = document.querySelector("#set-sat-influence")
 
 const palette = document.querySelector("#palette");
 const gamma = document.querySelector("#gamma");
@@ -23,6 +24,7 @@ function setDefaults(){
   setColors.value = 6;
   setTones.value = 6;
   setLightInfluence.value = 1.75;
+  setSatfluence.value = 2;
 }
 
 function keepInRange(){
@@ -35,6 +37,9 @@ function keepInRange(){
   }; 
   if(parseInt(setLightInfluence.value) > parseInt(setLightInfluence.max)){
     setLightInfluence.value = setLightInfluence.max;
+  }; 
+  if(parseInt(setSatfluence.value) > parseInt(setSatfluence.max)){
+    setSatfluence.value = setSatfluence.max;
   }; 
 
   //min
@@ -50,7 +55,11 @@ function keepInRange(){
   || setLightInfluence.value == ""){
     setLightInfluence.value = setLightInfluence.min;
   }; 
-}
+  if(parseInt(setSatfluence.value) < parseInt(setSatfluence.min)
+  || setSatfluence.value == ""){
+    setSatfluence.value = setSatfluence.min;
+  }; 
+};
 
 function createPalette(){
   keepInRange();
@@ -66,7 +75,7 @@ function createPalette(){
   for(let h = 1; h < setTones.value; h++){
     for(let w = 0; w < setColors.value; w++){
       const hue = parseInt(360/setColors.value*w);
-      const saturation = parseInt(100/setTones.value*(h+1)*2);
+      const saturation = parseInt(100/setTones.value*(h+1)*setSatfluence.value);
       const lightness = parseInt(100/setTones.value*h/setLightInfluence.value);
       
       const color = h == 0 ? `hsl(0, 0%, ${parseInt(100/(setColors.value-w))}%)`
@@ -95,13 +104,7 @@ function createPalette(){
   tile.style.backgroundColor = color;
   // tile.innerText = color.slice(4,-1);
   gamma.appendChild(tile);
-}
-
-
-
-[rngHue, rngSaturation, rngLightness].forEach(val => {
-	val.addEventListener("input", setValue);
-})
+};
 
 function setValue(){
 	const color = `hsl(${rngHue.value}, ${rngSaturation.value}%, ${rngLightness.value}%)`;
@@ -120,7 +123,12 @@ function setValue(){
 	})
 };
 
-[setColors, setTones, setLightInfluence].forEach(set => {
+
+//listeners
+[rngHue, rngSaturation, rngLightness].forEach(val => {
+	val.addEventListener("input", setValue);
+});
+[setColors, setTones, setSatfluence, setLightInfluence].forEach(set => {
   set.addEventListener("input", createPalette)
 });
 
