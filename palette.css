@@ -17,16 +17,18 @@ body {
 
 #palette-settings {
   grid-area: settings;
-  display: flex;
+	box-sizing: border-box;
+  display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: .5rem;
 }
 #palette-settings fieldset {
-  padding: 3px;
-  flex: auto;
+  padding: 0;
+	border: none;
 }
 input[type="number"] {
   background-color: darkslateblue;
   color: #ccc;
-  width: 70px;
 }
 
 #colors-container {
