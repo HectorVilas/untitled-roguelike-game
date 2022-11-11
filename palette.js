@@ -28,37 +28,15 @@ function setDefaults(){
 }
 
 function keepInRange(){
-  //max
-  if(parseInt(setColors.value) > parseInt(setColors.max)){
-    setColors.value = setColors.max;
-  } 
-  if(parseInt(setTones.value) > parseInt(setTones.max)){
-    setTones.value = setTones.max;
-  }; 
-  if(parseInt(setLightInfluence.value) > parseInt(setLightInfluence.max)){
-    setLightInfluence.value = setLightInfluence.max;
-  }; 
-  if(parseInt(setSatfluence.value) > parseInt(setSatfluence.max)){
-    setSatfluence.value = setSatfluence.max;
-  }; 
-
-  //min
-  if(parseInt(setColors.value) < parseInt(setColors.min)
-  || setColors.value == ""){
-    setColors.value = setColors.min;
-  } 
-  if(parseInt(setTones.value) < parseInt(setTones.min)
-  || setTones.value == ""){
-    setTones.value = setTones.min;
-  }; 
-  if(parseInt(setLightInfluence.value) < parseInt(setLightInfluence.min)
-  || setLightInfluence.value == ""){
-    setLightInfluence.value = setLightInfluence.min;
-  }; 
-  if(parseInt(setSatfluence.value) < parseInt(setSatfluence.min)
-  || setSatfluence.value == ""){
-    setSatfluence.value = setSatfluence.min;
-  }; 
+  const inputs = [setColors, setTones, setLightInfluence, setSatfluence];
+  
+  inputs.forEach(input => {
+    if(parseInt(input.value) > parseInt(input.max)){
+      input.value = input.max;
+    } else if(parseInt(input.value) < parseInt(input.min) || input.value == ""){
+      input.value = input.min;
+    }
+  });
 };
 
 function createPalette(){
