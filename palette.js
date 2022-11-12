@@ -103,20 +103,22 @@ const colorPicker = (() => {
 
   function setValue(){
     const color = `hsl(${hue.value}, ${saturation.value}%, ${lightness.value}%)`;
-    hslOutput.innerText = color;
-    
     samples.forEach((samp, i) => {
       const h = hue.value;
       const s = parseInt(saturation.value);
       const l = parseInt(lightness.value);
-      const mult = parseInt(multiplier.value);
+      const mult = parseFloat(multiplier.value);
+      
+      hslOutput.innerText = `${color} - multiplier x${mult}`;
 
       const tones = [
+        `hsl(${h}, ${s-mult*3}%, ${l+mult*3}%)`,
         `hsl(${h}, ${s-mult*2}%, ${l+mult*2}%)`,
         `hsl(${h}, ${s-mult}%, ${l+mult}%)`,
         `hsl(${h}, ${s}%, ${l}%)`,
         `hsl(${h}, ${s+mult}%, ${l-mult}%)`,
         `hsl(${h}, ${s+mult*2}%, ${l-mult*2}%)`,
+        `hsl(${h}, ${s+mult*2}%, ${l-mult*3}%)`,
       ];
 
       samp.style.backgroundColor = tones[i];
