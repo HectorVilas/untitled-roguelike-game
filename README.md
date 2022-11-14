@@ -3,8 +3,8 @@
 
 # Play: https://hectorvilas.github.io/untitled-roguelike-game/
 
-## map editor: https://hectorvilas.github.io/untitled-roguelike-game/map-editor
-## color palette generator: https://hectorvilas.github.io/untitled-roguelike-game/palette
+### map editor: https://hectorvilas.github.io/untitled-roguelike-game/map-editor
+### color palette generator: https://hectorvilas.github.io/untitled-roguelike-game/palette
 
 ---
 
@@ -229,7 +229,6 @@ Yesterday I decided what kind of visual style I want, and remembered that tilese
 Here is what I've been doing today:
 
 ![](gfx/tileset.png)
-(this image will always autoupdate)
 
 It's my first time making pixel art, and my first time making a tileset, but I think I'm doing fine.
 
@@ -354,3 +353,32 @@ I've been investigating, watching videos, reading about tilesets. Now I'm workin
 ![](READMEmd/progress014.gif)
 
 The math on this tool is confusing, I don't know too much about the science behind colors, but I know what each `HSL` value does, so it's enough to try. After trying a lot of combinations (on Codepen, that's why this tool appeared with a single commit) I think I found a sweet spot. Now I'll be able to make my own color palette, and even fine tune a little more with the tool at the right.
+
+## update 11
+4 days working on this without updating it's progress, so I'll resume:
+
+The color palette received a few changes and new inputs, this was the final change, I got the best colors from this. Other changes happened in the code, but nothing relevant.
+
+![](READMEmd/progress015.gif)
+
+
+Then I started working with a new tileset, moving from 12x12 pixels to 16x16 and from 16 colors to 70 from the color palette tool I made:
+
+![](./gfx/walls16.png) ![](./gfx/door-win16.png) ![](./gfx/floors16.png)
+
+(those images will always autoupdate)
+
+I've speent like 3 days working on it, not coding, just drawing. It was pretty hard, but I finally have some decent looking walls and floors.
+
+Then I started coding again (finally!) and adapted everything for the new tiles and the new way the walls are drawn (there's a few extra walls variations). Here is a little test made on the map editor:
+
+![](READMEmd/progress016.gif)
+
+### what's next
+Now I need to add those doors and windows to the scene. Those should change angle depending on the connecting walls, influence the wall variation so it will connect, and will be treated as entities for better interaction.
+
+I need to go back to drawing, but it's taking too long. I'll try to draw the minimum necessary to furnish interiors and add details to exteriors.
+
+I'm also thinking that some sprites will be bigger than 16x16 pixels, like traffic lights, so those will need another way to be drawn. [LucioFurnari](https://github.com/LucioFurnari) suggested I should use `::after` for this. That's a really good idea!
+
+> I wanted to make this project to keep practicing with all the new frontend knowledge in a fun way, but I think I'm falling behind in the course. On the other hand, what I'm applying here is exactly what will be done in the next practice (single responsability modules and all that). I'll keep working on this project for now, and maybe read the next lessons even if I don't make the practices, I can always give another read when I go back to practice again.
