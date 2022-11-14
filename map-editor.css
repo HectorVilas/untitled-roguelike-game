@@ -3,14 +3,15 @@
   --tools-size: 1fr;
   --tile-btn-size: 50px;
   --clr-text-light: hsl(220, 30%, 85%);
+  --map-size: 20;
 }
 
 body {
   box-sizing: border-box;
   padding: .25rem;
   display: grid;
-  grid-template-columns: calc(var(--tile-size) * 24);
-  grid-template-rows: calc(var(--tile-size) * 24) var(--tools-size);
+  grid-template-columns: calc(var(--tile-size) * var(--map-size));
+  grid-template-rows: calc(var(--tile-size) * var(--map-size)) var(--tools-size);
   grid-template-areas: "board" "tools";
   user-select: none;
   gap: .5rem;
@@ -24,8 +25,8 @@ body {
 }
 .board-layer {
   display: grid;
-  grid-template-columns: repeat(24, 1fr);
-  grid-template-rows: repeat(24, 1fr);
+  grid-template-columns: repeat(var(--map-size), 1fr);
+  grid-template-rows: repeat(var(--map-size), 1fr);
 }
 /* - - - - - */
 

@@ -1,12 +1,13 @@
 import { tiles } from "./tiles.js";
 import { getTile } from "./tileHandler.js";
 
+const mapSize = 20;
 let map;
 let mapUndo = [];
 let emptyMap = new Array(
-  new Array(24).fill(new Array(24).fill("g1")),
-  new Array(24).fill(new Array(24).fill(" ")),
-  new Array(24).fill(new Array(24).fill(" ")),
+  new Array(mapSize).fill(new Array(mapSize).fill("g1")),
+  new Array(mapSize).fill(new Array(mapSize).fill(" ")),
+  new Array(mapSize).fill(new Array(mapSize).fill(" ")),
 );
 
 //TODO: change for custom testing map later
@@ -45,8 +46,8 @@ const display = (() => {
     const lastLayer = dom.board.layers.length-1
 
     for(let layer = 0; layer < dom.board.layers.length; layer++){
-      for(let y = 0; y < 24; y++){
-        for(let x = 0; x < 24; x++){
+      for(let y = 0; y < mapSize; y++){
+        for(let x = 0; x < mapSize; x++){
           const tile = document.createElement("div");
           tile.classList.add("tile");
           
@@ -125,9 +126,9 @@ const display = (() => {
     for(let layer = 0; layer < layers.length; layer++){
       const tilesInDom = document.querySelectorAll(`#layer${layer} .tile`);
   
-      for(let y = 0; y < 24; y++){
-        for(let x = 0; x < 24; x++){
-          const coordToIdx = y * 24 + x;
+      for(let y = 0; y < mapSize; y++){
+        for(let x = 0; x < mapSize; x++){
+          const coordToIdx = y * mapSize + x;
           const char = map[layer][y][x];
           const tile = getTile(layer, x, y, map)
           const url = tile?.url || "";
