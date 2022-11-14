@@ -1,11 +1,10 @@
-import { gameLogic } from "./gameLogic.js";
 import { getTile } from "./tileHandler.js";
 
 export const ui = (() => {
   const scale = {
-    boardSize: 31,
-    tilesetWidth: 24,
-    tilePixelRes: 12,
+    boardSize: 25,
+    tilesetWidth: 12,
+    tilePixelRes: 16,
     pixelMultiplier: 2,
     getDomTileSize: () => scale.tilePixelRes * scale.pixelMultiplier,
     getDomBoardSize: () => scale.getDomTileSize() * scale.boardSize,
