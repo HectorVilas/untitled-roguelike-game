@@ -75,16 +75,7 @@ const display = (() => {
 
     [dom.tiles.btnFloor, dom.tiles.btnWall, dom.tiles.btnCeiling].forEach(btnSet => {
       btnSet.forEach(btn => {
-        btn.addEventListener("click", () => {
-          const btns = document.querySelectorAll(".tile-btn");
-          btns.forEach(b => b.classList.remove("active"));
-          btn.classList.add("active");
-    
-          editor.active.activeTool = "draw";
-          editor.active.layer = btn.className.includes("floor") ? 0
-          : btn.className.includes("wall") ? 1 : 2;
-          editor.active.tile = btn.dataset.char;
-        });
+        btn.addEventListener("click", toggleTool);
       });
     });
     
@@ -127,6 +118,17 @@ const display = (() => {
         editor.undo();
       }
     })
+  };
+
+  function toggleTool(){
+    const btns = document.querySelectorAll(".tile-btn");
+    btns.forEach(b => b.classList.remove("active"));
+    this.classList.add("active");
+
+    editor.active.activeTool = "draw";
+    editor.active.layer = this.className.includes("floor") ? 0
+    : this.className.includes("wall") ? 1 : 2;
+    editor.active.tile = this.dataset.char;
   };
 
   function refreshMap(){
