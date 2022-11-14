@@ -39,6 +39,7 @@ const display = (() => {
       btnUndo: document.querySelector("button.undo"),
       btnLoad: document.querySelector("button.load"),
       btnSave: document.querySelector("button.save"),
+      btnView: document.querySelector("button.view"),
     },
   };
 
@@ -116,6 +117,8 @@ const display = (() => {
     
     dom.editor.btnUndo.addEventListener("click", editor.undo);
     
+    dom.editor.btnView.addEventListener("click", toggleView);
+
     window.addEventListener("mousedown", () => editor.mousedown = true);
     window.addEventListener("mouseup", () => editor.mousedown = false);
   };
@@ -169,6 +172,18 @@ const display = (() => {
         parent.appendChild(tile)
       }
     })
+  };
+
+  function toggleView(){
+    const body = document.querySelector("body");
+    const tilesList = document.querySelector(".tiles-list");
+    const floorList = document.querySelector(".floor-list");
+    const wallList = document.querySelector(".wall-list");
+    const ceilingList = document.querySelector(".ceiling-list");
+    const files = document.querySelector("fieldset.files");
+
+    [body, tilesList, floorList, wallList, ceilingList,
+      files].forEach(item => item.classList.toggle("rotate"));
   };
 
   return { dom, createBoard, addListeners, refreshMap, placeTiles }
