@@ -121,6 +121,12 @@ const display = (() => {
 
     window.addEventListener("mousedown", () => editor.mousedown = true);
     window.addEventListener("mouseup", () => editor.mousedown = false);
+    window.addEventListener("keydown", (e) => {
+      const k = e.key.toLowerCase();
+      if(k === "z" && e.ctrlKey){
+        editor.undo();
+      }
+    })
   };
 
   function refreshMap(){
