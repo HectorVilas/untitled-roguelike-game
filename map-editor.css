@@ -9,8 +9,8 @@ body {
   box-sizing: border-box;
   padding: .25rem;
   display: grid;
-  grid-template-columns: var(--board-size);
-  grid-template-rows: var(--board-size) var(--tools-size);
+  grid-template-columns: calc(var(--tile-size) * 24);
+  grid-template-rows: calc(var(--tile-size) * 24) var(--tools-size);
   grid-template-areas: "board" "tools";
   user-select: none;
   gap: .5rem;

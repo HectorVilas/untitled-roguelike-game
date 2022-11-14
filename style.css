@@ -1,6 +1,6 @@
 :root {
-  --tileset-width: 24;
-  --tile-res: 12px;
+  --tileset-width: 12;
+  --tile-res: 16px;
 
   --board-tiles: 31;
   --pixel-multiplier: 2;
