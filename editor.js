@@ -168,7 +168,7 @@ const display = (() => {
         
         const tile = document.createElement("div");
         tile.classList.add("tile-btn", groupClass, group[item].name.split(" ").join("-"));
-        if(!isActiveSet) {
+        if(!isActiveSet && listClass == "wall-list") {
           tile.classList.add("active");
           isActiveSet = true;
         }
@@ -204,8 +204,8 @@ const editor = (() => {
   let mousedown = false;
   const active = {
     activeTool: "draw",
-    layer: 0,
-    tile: "g1",
+    layer: 1,
+    tile: "r",
   };
 
 
