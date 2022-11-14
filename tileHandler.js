@@ -22,7 +22,7 @@ export function getTile(layer, x, y, map){
     } else if(connected === "ns") { values.colRow.r += 2; values.colRow.c += 0;
     } else if(connected === "ne" ) { values.colRow.r += 2; values.colRow.c += 1;
     } else if(connected === "es" ) { values.colRow.r += 0; values.colRow.c += 1;
-    } else if(connected === "ew" ) { values.colRow.r += 2; values.colRow.c += 2;
+    } else if(connected === "ew" ) { values.colRow.r += 3; values.colRow.c += 2;
     } else if(connected === "sw" ) { values.colRow.r += 0; values.colRow.c += 3;
     } else if(connected === "nw" ) { values.colRow.r += 2; values.colRow.c += 3;
     } else if(connected === "new" ) { values.colRow.r += 2; values.colRow.c += 2;
