@@ -112,12 +112,72 @@ const display = (() => {
 
     window.addEventListener("mousedown", () => editor.mousedown = true);
     window.addEventListener("mouseup", () => editor.mousedown = false);
+    
     window.addEventListener("keydown", (e) => {
       const k = e.key.toLowerCase();
-      if(k === "z" && e.ctrlKey){
-        editor.undo();
-      }
-    })
+      if(k === "z" && e.ctrlKey){ editor.undo() }
+      else if(k === "1") { toggleToolHotkey(1) }
+      else if(k === "2") { toggleToolHotkey(2) }
+      else if(k === "3") { toggleToolHotkey(3) }
+    });
+
+    window.addEventListener("wheel", (e) => {
+      // if(e.shiftKey)toggleWheelTool(e)
+      toggleWheelTool(e)
+    } );
+  };
+
+  function toggleWheelTool(e){
+    const layer = getActiveTile().layer + 1;
+    // let idx = getActiveTile().idx;
+    let idx = e.deltaY > 0 ? getActiveTile().idx+1 : getActiveTile().idx-1;
+    
+    //stay in valid indexes
+    if(idx < 0) idx = 0;
+    else if(idx > getActiveTile().maxIdx) idx = getActiveTile().maxIdx;
+    
+    toggleToolHotkey(layer, idx);
+
+  };
+
+  function getActiveTile(){
+    const layers = [dom.tiles.btnFloor,dom.tiles.btnWall,dom.tiles.btnCeiling]
+    const active = {
+      layer: undefined,
+      idx: undefined,
+      maxIdx: undefined
+    };
+    
+    layers.forEach((set, i) => set.forEach( (tile, j) => {
+      if(tile.className.includes("active")) {
+        active.layer = i;
+        active.idx = j;
+      };
+    }));
+    
+    active.maxIdx = layers[active.layer].length-1;
+
+    return active;
+  };
+
+  function toggleToolHotkey(layer, idx){
+    let activeIdx = 1;
+    const layerName = layer == 1 ? "floor" : layer == 2 ? "wall" : "ceiling";
+    const set = document.querySelectorAll(`.${layerName}-list .tile-btn`);
+    set.forEach((tile,i) => {
+      if(tile.className.includes("active")) activeIdx = i;
+    });
+
+    //remove active status
+    [dom.tiles.btnFloor,dom.tiles.btnWall,dom.tiles.btnCeiling]
+    .forEach(set => {
+      set.forEach(tile => tile.classList.remove("active"));
+    });
+
+    //add active status, set values for brush
+    set[idx !== undefined ? idx : activeIdx].classList.add("active");
+    editor.active.layer = layer-1;
+    editor.active.tile = set[idx !== undefined ? idx : activeIdx].dataset.char;
   };
 
   function toggleTool(){
