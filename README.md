@@ -382,3 +382,19 @@ I need to go back to drawing, but it's taking too long. I'll try to draw the min
 I'm also thinking that some sprites will be bigger than 16x16 pixels, like traffic lights, so those will need another way to be drawn. [LucioFurnari](https://github.com/LucioFurnari) suggested I should use `::after` for this. That's a really good idea!
 
 > I wanted to make this project to keep practicing with all the new frontend knowledge in a fun way, but I think I'm falling behind in the course. On the other hand, what I'm applying here is exactly what will be done in the next practice (single responsability modules and all that). I'll keep working on this project for now, and maybe read the next lessons even if I don't make the practices, I can always give another read when I go back to practice again.
+
+## update 12
+I added a button to toggle where the tools are:
+
+![](READMEmd/progress017.gif)
+
+Then I started working on hotkeys:
+
+![](READMEmd/progress018.gif)
+
+- CTRL+Z will undo
+- 1-2-3 keys will select layer
+- mouse wheel will pick the next or previous tile on the list
+- when the active tile is at the beginning or end, it will stay there (prevent going out of index)
+
+and more little code changes.
