@@ -36,3 +36,11 @@ export class Ceiling extends Tile {
     this.coverage = coverage;
   }
 };
+
+export class Entity extends Tile {
+  constructor(name, url, colRow, isBlocking, hasOverlay){
+    super(name, url, colRow);
+    this.isBlocking = isBlocking;
+    this.hasOverlay = hasOverlay;
+  }
+};
