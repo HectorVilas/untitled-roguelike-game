@@ -1,4 +1,4 @@
-import { Wall, Ceiling, Floor } from "./classes.js";
+import { Wall, Ceiling, Floor, Entity } from "./classes.js";
 
 export const tiles = {
   "floor-tiles": { //name, url, colRow
@@ -48,6 +48,10 @@ export const tiles = {
     "f5": new Wall("revoked","./gfx/walls16.png", { c:9, r:9 }, true),
     "f6": new Wall("wire fence","./gfx/walls16.png", { c:1, r:13 }, true),
     "f7": new Wall("wood palisade","./gfx/walls16.png", { c:5, r:13 }, true),
+    //entities, on "walls" temporal
+    //name, url, colRow, isBlocking, hasOverlay
+    "bkcs": new Entity("wooden bookcase","./gfx/props16.png", { c:5, r:2 }, true, true),
+    
   },
 
   "ceiling": { //name, url, colRow, coverage
