@@ -193,7 +193,9 @@ const display = (() => {
   };
 
   function refreshMap(){
-    const layers = ["floor-tiles", "walls", "layers", "ceiling"];
+    const layers = ["floor-tiles", "walls", "overlay", "ceiling"];
+    const overlayLayer = document.querySelectorAll(`.overlay .tile`);
+    // console.log(overlayLayer);
   
     for(let layer = 0; layer < layers.length; layer++){
       const tilesInDom = document.querySelectorAll(`#layer${layer} .tile`);
@@ -201,10 +203,22 @@ const display = (() => {
       for(let y = 0; y < mapSize; y++){
         for(let x = 0; x < mapSize; x++){
           const coordToIdx = y * mapSize + x;
-          const tile = getTile(layer, x, y, map)
+          const tile = getTile(layer, x, y, map);
           const url = tile?.url || "";
           tilesInDom[coordToIdx].style.backgroundImage = `url(${url})`;
           if(url !== "") tilesInDom[coordToIdx].style.backgroundPosition = `calc(100% - 100% * ${tile.colRow.c}) calc(100% - 100% * ${tile.colRow.r})`;
+
+          //draw top half if necessary
+          const tileOverlay = getTile(layer-1, x, y+1, map);
+          if(layers[layer] === "overlay" && tileOverlay?.hasOverlay){
+            const url = getTile(layer-1, x, y+1, map).url;
+
+            overlayLayer[coordToIdx].style.backgroundImage = `url(${url})`;
+            
+            console.log(tile?.url);
+
+            if(url !== "") overlayLayer[coordToIdx].style.backgroundPosition = `calc(100% - 100% * ${tileOverlay.colRow.c}) calc(100% - 100% * ${tileOverlay.colRow.r-1})`;
+          }
         }
       }
     }
