@@ -5,9 +5,10 @@ const mapSize = 20;
 let map;
 let mapUndo = [];
 let emptyMap = new Array(
-  new Array(mapSize).fill(new Array(mapSize).fill("g1")),
-  new Array(mapSize).fill(new Array(mapSize).fill(" ")),
-  new Array(mapSize).fill(new Array(mapSize).fill(" ")),
+  new Array(mapSize).fill(new Array(mapSize).fill("g1")), //floor
+  new Array(mapSize).fill(new Array(mapSize).fill(" ")), //wall-prop-sprite
+  new Array(mapSize).fill(new Array(mapSize).fill(" ")), //overlay
+  new Array(mapSize).fill(new Array(mapSize).fill(" ")), //ceiling
 );
 
 //TODO: change for custom testing map later
@@ -187,12 +188,12 @@ const display = (() => {
 
     editor.active.activeTool = "draw";
     editor.active.layer = this.className.includes("floor") ? 0
-    : this.className.includes("wall") ? 1 : 2;
+    : this.className.includes("wall") ? 1 : this.className.includes("overlay") ? 2 : 3;
     editor.active.tile = this.dataset.char;
   };
 
   function refreshMap(){
-    const layers = ["floor-tiles", "walls", "ceiling"];
+    const layers = ["floor-tiles", "walls", "layers", "ceiling"];
   
     for(let layer = 0; layer < layers.length; layer++){
       const tilesInDom = document.querySelectorAll(`#layer${layer} .tile`);
@@ -200,7 +201,6 @@ const display = (() => {
       for(let y = 0; y < mapSize; y++){
         for(let x = 0; x < mapSize; x++){
           const coordToIdx = y * mapSize + x;
-          const char = map[layer][y][x];
           const tile = getTile(layer, x, y, map)
           const url = tile?.url || "";
           tilesInDom[coordToIdx].style.backgroundImage = `url(${url})`;

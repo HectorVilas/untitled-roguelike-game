@@ -2,10 +2,10 @@ import { maps } from "./maps.js";
 import { tiles } from "./tiles.js";
 
 export function getTile(layer, x, y, map){
-  const layers = ["floor-tiles", "walls", "ceiling"];
+  const layers = ["floor-tiles", "walls", "overlay", "ceiling"];
   const thisMap = map || maps.testMap;
   const char = thisMap?.[layer]?.[y]?.[x];
-  let values = tiles[layers[layer]][char];
+  let values = tiles?.[layers[layer]]?.[char];
   
   if(char !== undefined && char !== " " && layers[layer] == "walls"){
     values = JSON.parse(JSON.stringify(tiles[layers[layer]][char]));
