@@ -2,12 +2,13 @@ import { maps } from "./maps.js";
 import { tiles } from "./tiles.js";
 
 export function getTile(layer, x, y, map){
-  const layers = ["floor-tiles", "walls", "overlay", "ceiling"];
+  const layers = ["floor-tiles", "walls", "sprites", "overlay", "ceiling"];
   const thisMap = map || maps.testMap;
   const char = thisMap?.[layer]?.[y]?.[x];
   let values = tiles?.[layers[layer]]?.[char];
   
-  if(char !== undefined && char !== " " && layers[layer] == "walls"){
+  if(char !== undefined && char !== " " && tiles[layers[layer]][char].connectsToWalls){
+    //create a copy
     values = JSON.parse(JSON.stringify(tiles[layers[layer]][char]));
     let connected = "";
     if(thisMap?.[layer]?.[y-1]?.[x] !== " ") connected += "n";
@@ -15,22 +16,27 @@ export function getTile(layer, x, y, map){
     if(thisMap?.[layer]?.[y+1]?.[x] !== " ") connected += "s";
     if(thisMap?.[layer]?.[y]?.[x-1] !== " ") connected += "w";
     
-    if(connected === "n") { values.colRow.r += 3; values.colRow.c += 0;
-    } else if(connected === "e") { values.colRow.r += 3; values.colRow.c += 1;
-    } else if(connected === "s") { values.colRow.r += 1; values.colRow.c += 0;
-    } else if(connected === "w") { values.colRow.r += 3; values.colRow.c += 3;
-    } else if(connected === "ns") { values.colRow.r += 2; values.colRow.c += 0;
-    } else if(connected === "ne" ) { values.colRow.r += 2; values.colRow.c += 1;
-    } else if(connected === "es" ) { values.colRow.r += 0; values.colRow.c += 1;
-    } else if(connected === "ew" ) { values.colRow.r += 3; values.colRow.c += 2;
-    } else if(connected === "sw" ) { values.colRow.r += 0; values.colRow.c += 3;
-    } else if(connected === "nw" ) { values.colRow.r += 2; values.colRow.c += 3;
-    } else if(connected === "new" ) { values.colRow.r += 2; values.colRow.c += 2;
-    } else if(connected === "nes" ) { values.colRow.r += 1; values.colRow.c += 1;
-    } else if(connected === "esw" ) { values.colRow.r += 0; values.colRow.c += 2;
-    } else if(connected === "nsw" ) { values.colRow.r += 1; values.colRow.c += 3;
-    } else if(connected === "nesw" ) { values.colRow.r += 1; values.colRow.c += 2;}
+    if(connected === "n") adjustTile(values, {r: 3, c: 0});
+    else if(connected === "e") adjustTile(values, {r: 3, c: 1});
+    else if(connected === "s") adjustTile(values, {r: 1, c: 0});
+    else if(connected === "w") adjustTile(values, {r: 3, c: 3});
+    else if(connected === "ns") adjustTile(values, {r: 2, c: 0});
+    else if(connected === "ne" ) adjustTile(values, {r: 2, c: 1});
+    else if(connected === "es" ) adjustTile(values, {r: 0, c: 1});
+    else if(connected === "ew" ) adjustTile(values, {r: 3, c: 2});
+    else if(connected === "sw" ) adjustTile(values, {r: 0, c: 3});
+    else if(connected === "nw" ) adjustTile(values, {r: 2, c: 3});
+    else if(connected === "new" ) adjustTile(values, {r: 2, c: 2});
+    else if(connected === "nes" ) adjustTile(values, {r: 1, c: 1});
+    else if(connected === "esw" ) adjustTile(values, {r: 0, c: 2});
+    else if(connected === "nsw" ) adjustTile(values, {r: 1, c: 3});
+    else if(connected === "nesw" ) adjustTile(values, {r: 1, c: 2});
   };
   
-  return values
+  return values;
 };
+
+function adjustTile(tile, colRow){
+  tile.colRow.r += colRow.r;
+  tile.colRow.c += colRow.c;
+}
