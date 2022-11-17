@@ -7,7 +7,7 @@ export function getTile(layer, x, y, map){
   const char = thisMap?.[layer]?.[y]?.[x];
   let values = tiles?.[layers[layer]]?.[char];
   
-  if(char !== undefined && char !== " " && tiles[layers[layer]][char].connectsToWalls){
+  if(char !== undefined && char !== " " && (tiles[layers[layer]][char].connectsToWalls || tiles[layers[layer]][char].connectsToSelf)){
     //create a copy
     values = JSON.parse(JSON.stringify(tiles[layers[layer]][char]));
     let connected = "";
