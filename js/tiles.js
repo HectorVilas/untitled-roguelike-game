@@ -48,17 +48,28 @@ export const tiles = {
     "f5": new Wall("revoked","./gfx/walls16.png", { c:9, r:9 }, true, true),
     "f6": new Wall("wire fence","./gfx/walls16.png", { c:1, r:13 }, true, true),
     "f7": new Wall("wood palisade","./gfx/walls16.png", { c:5, r:13 }, true, true),
-    //entities, on "walls" temporal
-    
   },
   
   "ceiling": { //name, url, colRow, coverage
     "b": new Ceiling("built","./gfx/tileset.png", { c:15, r:7 }, 100),
   },
   
-  
   "sprites": { //name, url, colRow, isBlocking, connectsToSelf, hasOverlay
-    "bkcs": new Entity("wooden bookcase","./gfx/props16.png", { c:5, r:2 }, true, false, true),
+    "wtb": new Entity("wooden table","./gfx/props16.png", { c:1, r:1 }, true, true, false),
+    "wb": new Entity("wooden bed","./gfx/props16.png", { c:1, r:5 }, true, true, false),
+    "kc": new Entity("kitchen counter","./gfx/props16.png", { c:1, r:10 }, true, true, true),
+    "ptr": new Entity("pantry","./gfx/props16.png", { c:6, r:2 }, true, false, true),
+    "ovn": new Entity("oven","./gfx/props16.png", { c:7, r:2 }, true, false, true),
+    "wbc": new Entity("wooden bookcase","./gfx/props16.png", { c:5, r:2 }, true, false, true),
+    "wch1": new Entity("wooden chair","./gfx/props16.png", { c:8, r:2 }, true, false, true),
+    "wch2": new Entity("wooden chair","./gfx/props16.png", { c:9, r:2 }, true, false, true),
+    "wch3": new Entity("wooden chair","./gfx/props16.png", { c:8, r:4 }, true, false, true),
+    "wch4": new Entity("wooden chair","./gfx/props16.png", { c:9, r:4 }, true, false, true),
+    "wch5": new Entity("wooden chair","./gfx/props16.png", { c:10, r:2 }, true, false, true),
+    "wch6": new Entity("wooden chair","./gfx/props16.png", { c:11, r:2 }, true, false, true),
+    "wch7": new Entity("wooden chair","./gfx/props16.png", { c:10, r:4 }, true, false, true),
+    "wch8": new Entity("wooden chair","./gfx/props16.png", { c:11, r:4 }, true, false, true),
+    "sch": new Entity("small wooden chair","./gfx/props16.png", { c:7, r:3 }, true, false, false),
 
   },
 };
