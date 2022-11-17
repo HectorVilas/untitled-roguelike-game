@@ -24,9 +24,10 @@ export class Floor extends Tile {
 };
 
 export class Wall extends Tile {
-  constructor(name, url, colRow, isBlocking) {
+  constructor(name, url, colRow, isBlocking, connectsTo) {
     super(name, url, colRow);
     this.isBlocking = isBlocking;
+    this.connectsTo = connectsTo;
   }
 };
 
@@ -38,9 +39,10 @@ export class Ceiling extends Tile {
 };
 
 export class Entity extends Tile {
-  constructor(name, url, colRow, isBlocking, hasOverlay){
+  constructor(name, url, colRow, isBlocking, connectsTo, hasOverlay){
     super(name, url, colRow);
     this.isBlocking = isBlocking;
+    this.connectsTo = connectsTo;
     this.hasOverlay = hasOverlay;
   }
 };

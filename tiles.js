@@ -33,24 +33,24 @@ export const tiles = {
     "stc": new Floor("street crosswalk", "./gfx/floors16.png", { c:7, r:5 }),
   },
 
-  "walls": { //name, url, colRow, isBlocking
+  "walls": { //name, url, colRow, isBlocking, connectsTo
     //tall
-    "r": new Wall("revoked","./gfx/walls16.png", { c:1, r:1 }, true),
-    "b": new Wall("brick","./gfx/walls16.png", { c:5, r:1 }, true),
-    "w1": new Wall("wood","./gfx/walls16.png", { c:1, r:5 }, true),
-    "w2": new Wall("wood","./gfx/walls16.png", { c:5, r:5 }, true),
-    "g": new Wall("glass","./gfx/walls16.png", { c:9, r:13 }, true),
+    "r": new Wall("revoked","./gfx/walls16.png", { c:1, r:1 }, true, "wall"),
+    "b": new Wall("brick","./gfx/walls16.png", { c:5, r:1 }, true, "wall"),
+    "w1": new Wall("wood","./gfx/walls16.png", { c:1, r:5 }, true, "wall"),
+    "w2": new Wall("wood","./gfx/walls16.png", { c:5, r:5 }, true, "wall"),
+    "g": new Wall("glass","./gfx/walls16.png", { c:9, r:13 }, true, "wall"),
     //fence
-    "f1": new Wall("brick","./gfx/walls16.png", { c:9, r:1 }, true),
-    "f2": new Wall("brick with palisade","./gfx/walls16.png", { c:9, r:5 }, true),
-    "f3": new Wall("aluminium palisade","./gfx/walls16.png", { c:1, r:9 }, true),
-    "f4": new Wall("wood palisade","./gfx/walls16.png", { c:5, r:9 }, true),
-    "f5": new Wall("revoked","./gfx/walls16.png", { c:9, r:9 }, true),
-    "f6": new Wall("wire fence","./gfx/walls16.png", { c:1, r:13 }, true),
-    "f7": new Wall("wood palisade","./gfx/walls16.png", { c:5, r:13 }, true),
+    "f1": new Wall("brick","./gfx/walls16.png", { c:9, r:1 }, true, "wall"),
+    "f2": new Wall("brick with palisade","./gfx/walls16.png", { c:9, r:5 }, true, "wall"),
+    "f3": new Wall("aluminium palisade","./gfx/walls16.png", { c:1, r:9 }, true, "wall"),
+    "f4": new Wall("wood palisade","./gfx/walls16.png", { c:5, r:9 }, true, "wall"),
+    "f5": new Wall("revoked","./gfx/walls16.png", { c:9, r:9 }, true, "wall"),
+    "f6": new Wall("wire fence","./gfx/walls16.png", { c:1, r:13 }, true, "wall"),
+    "f7": new Wall("wood palisade","./gfx/walls16.png", { c:5, r:13 }, true, "wall"),
     //entities, on "walls" temporal
-    //name, url, colRow, isBlocking, hasOverlay
-    "bkcs": new Entity("wooden bookcase","./gfx/props16.png", { c:5, r:2 }, true, true),
+    //name, url, colRow, isBlocking, connectsTo, hasOverlay
+    "bkcs": new Entity("wooden bookcase","./gfx/props16.png", { c:5, r:2 }, true, "self", true),
     
   },
 
