@@ -7,6 +7,7 @@ let mapUndo = [];
 let emptyMap = new Array(
   new Array(mapSize).fill(new Array(mapSize).fill("g1")), //floor
   new Array(mapSize).fill(new Array(mapSize).fill(" ")), //wall-prop-sprite
+  new Array(mapSize).fill(new Array(mapSize).fill(" ")), //sprites
   new Array(mapSize).fill(new Array(mapSize).fill(" ")), //overlay
   new Array(mapSize).fill(new Array(mapSize).fill(" ")), //ceiling
 );
@@ -26,6 +27,7 @@ const display = (() => {
       ceilingList: document.querySelectorAll(".ceiling-list"),
       btnFloor: undefined,
       btnWall: undefined,
+      btnSprite: undefined,
       btnCeiling: undefined,
     },
     modal: {
@@ -72,9 +74,10 @@ const display = (() => {
     //reassign selectors for items generated from Js
     dom.tiles.btnFloor = document.querySelectorAll(".floor-list .tile-btn");
     dom.tiles.btnWall = document.querySelectorAll(".wall-list .tile-btn");
+    dom.tiles.btnSprite = document.querySelectorAll(".sprite-list .tile-btn");
     dom.tiles.btnCeiling = document.querySelectorAll(".ceiling-list .tile-btn");
 
-    [dom.tiles.btnFloor, dom.tiles.btnWall, dom.tiles.btnCeiling].forEach(btnSet => {
+    [dom.tiles.btnFloor, dom.tiles.btnWall, dom.tiles.btnSprite, dom.tiles.btnCeiling].forEach(btnSet => {
       btnSet.forEach(btn => {
         btn.addEventListener("click", toggleTool);
       });
@@ -92,8 +95,8 @@ const display = (() => {
         dom.modal.load.close();
       } else {
         dom.modal.loadInput.value = "";
-        const err = "THE MAP MUST CONTAIN 3 ARRAYS WITH STRINGS AS CONTENT";
-        dom.modal.loadInput.placeholder = err;
+        const errorMessage = "THE MAP MUST CONTAIN 5 ARRAYS";
+        dom.modal.loadInput.placeholder = errorMessage;
       };
     })
     
@@ -163,7 +166,10 @@ const display = (() => {
 
   function toggleToolHotkey(layer, idx){
     let activeIdx = 1;
-    const layerName = layer == 1 ? "floor" : layer == 2 ? "wall" : "ceiling";
+    const layerName = layer == 1 ? "floor"
+    : layer == 2 ? "wall"
+    : layer == 3? "sprite"
+    : "ceiling";
     const set = document.querySelectorAll(`.${layerName}-list .tile-btn`);
     set.forEach((tile,i) => {
       if(tile.className.includes("active")) activeIdx = i;
@@ -188,14 +194,16 @@ const display = (() => {
 
     editor.active.activeTool = "draw";
     editor.active.layer = this.className.includes("floor") ? 0
-    : this.className.includes("wall") ? 1 : this.className.includes("overlay") ? 2 : 3;
+    : this.className.includes("wall") ? 1
+    : this.className.includes("sprites") ? 2
+    : this.className.includes("overlay") ? 3
+    : 4;
     editor.active.tile = this.dataset.char;
   };
 
   function refreshMap(){
-    const layers = ["floor-tiles", "walls", "overlay", "ceiling"];
+    const layers = ["floor-tiles", "walls", "sprites", "overlay", "ceiling"];
     const overlayLayer = document.querySelectorAll(`.overlay .tile`);
-    // console.log(overlayLayer);
   
     for(let layer = 0; layer < layers.length; layer++){
       const tilesInDom = document.querySelectorAll(`#layer${layer} .tile`);
@@ -214,9 +222,6 @@ const display = (() => {
             const url = getTile(layer-1, x, y+1, map).url;
 
             overlayLayer[coordToIdx].style.backgroundImage = `url(${url})`;
-            
-            console.log(tile?.url);
-
             if(url !== "") overlayLayer[coordToIdx].style.backgroundPosition = `calc(100% - 100% * ${tileOverlay.colRow.c}) calc(100% - 100% * ${tileOverlay.colRow.r-1})`;
           }
         }
@@ -227,16 +232,19 @@ const display = (() => {
   function placeTiles(){
     const floors = tiles["floor-tiles"];
     const walls = tiles["walls"];
+    const sprites = tiles["sprites"];
     const ceilings = tiles["ceiling"];
     let isActiveSet = false;
 
-    [floors, walls, ceilings].forEach(group => {
+    [floors, walls, sprites, ceilings].forEach(group => {
       for(const item in group){
         const groupClass = group === floors ? "floor"
-        : group === walls ? "wall" : "ceiling";
+        : group === walls ? "wall" :  group === sprites ? "sprites" : "ceiling";
 
         const listClass = group === floors ? "floor-list"
-        : group === walls ? "wall-list" : "ceiling-list";
+        : group === walls ? "wall-list"
+        : group === sprites ? "sprite-list"
+        : "ceiling-list";
         
         let parent = document.querySelector(`.${listClass}`);
         
