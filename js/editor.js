@@ -146,7 +146,9 @@ const display = (() => {
   };
 
   function getActiveTile(){
-    const layers = [dom.tiles.btnFloor,dom.tiles.btnWall, dom.tiles.btnSprite,dom.tiles.btnCeiling]
+    //last layer is duplicated because there's an uninteractuable layer
+    const layers = [dom.tiles.btnFloor, dom.tiles.btnWall,dom.tiles.btnSprite,
+      dom.tiles.btnCeiling, dom.tiles.btnCeiling]
     const active = {
       layer: undefined,
       idx: undefined,
@@ -199,7 +201,6 @@ const display = (() => {
     : this.className.includes("sprite") ? 2
     // : this.className.includes("overlay") ? 3
     : 4;
-    console.log(this.className);
     editor.active.tile = this.dataset.char;
   };
 
@@ -293,9 +294,6 @@ const editor = (() => {
     tile: "r",
   };
 
-  setInterval(() => {
-    console.log(active.activeTool, active.layer, active.tile);
-  }, 100);
 
   function editMapTile(argX, argY){
     if(typeof argX !== "number") {
