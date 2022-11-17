@@ -7,14 +7,25 @@ export function getTile(layer, x, y, map){
   const char = thisMap?.[layer]?.[y]?.[x];
   let values = tiles?.[layers[layer]]?.[char];
   
-  if(char !== undefined && char !== " " && (tiles[layers[layer]][char].connectsToWalls || tiles[layers[layer]][char].connectsToSelf)){
+  if(char !== undefined && char !== " "
+  && (tiles[layers[layer]][char].connectsToWalls
+    || tiles[layers[layer]][char].connectsToSelf)){
     //create a copy
     values = JSON.parse(JSON.stringify(tiles[layers[layer]][char]));
     let connected = "";
-    if(thisMap?.[layer]?.[y-1]?.[x] !== " ") connected += "n";
-    if(thisMap?.[layer]?.[y]?.[x+1] !== " ") connected += "e";
-    if(thisMap?.[layer]?.[y+1]?.[x] !== " ") connected += "s";
-    if(thisMap?.[layer]?.[y]?.[x-1] !== " ") connected += "w";
+    //for walls
+    if(tiles[layers[layer]][char].connectsToWalls) {
+      if(thisMap?.[layer]?.[y-1]?.[x] !== " ") connected += "n";
+      if(thisMap?.[layer]?.[y]?.[x+1] !== " ") connected += "e";
+      if(thisMap?.[layer]?.[y+1]?.[x] !== " ") connected += "s";
+      if(thisMap?.[layer]?.[y]?.[x-1] !== " ") connected += "w";
+    //for sprites
+    } else if(thisMap?.[layer]?.[y]?.[x] === char){
+      if(thisMap?.[layer]?.[y-1]?.[x] == char) connected += "n";
+      if(thisMap?.[layer]?.[y]?.[x+1] == char) connected += "e";
+      if(thisMap?.[layer]?.[y+1]?.[x] == char) connected += "s";
+      if(thisMap?.[layer]?.[y]?.[x-1] == char) connected += "w";
+    }
     
     if(connected === "n") adjustTile(values, {r: 3, c: 0});
     else if(connected === "e") adjustTile(values, {r: 3, c: 1});
