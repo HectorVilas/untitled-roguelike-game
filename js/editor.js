@@ -123,6 +123,7 @@ const display = (() => {
       else if(k === "1") { toggleToolHotkey(1) }
       else if(k === "2") { toggleToolHotkey(2) }
       else if(k === "3") { toggleToolHotkey(3) }
+      else if(k === "4") { toggleToolHotkey(4) }
     });
 
     window.addEventListener("wheel", (e) => {
@@ -145,7 +146,7 @@ const display = (() => {
   };
 
   function getActiveTile(){
-    const layers = [dom.tiles.btnFloor,dom.tiles.btnWall,dom.tiles.btnCeiling]
+    const layers = [dom.tiles.btnFloor,dom.tiles.btnWall, dom.tiles.btnSprite,dom.tiles.btnCeiling]
     const active = {
       layer: undefined,
       idx: undefined,
@@ -176,7 +177,7 @@ const display = (() => {
     });
 
     //remove active status
-    [dom.tiles.btnFloor,dom.tiles.btnWall,dom.tiles.btnCeiling]
+    [dom.tiles.btnFloor,dom.tiles.btnWall,dom.tiles.btnSprite,dom.tiles.btnCeiling]
     .forEach(set => {
       set.forEach(tile => tile.classList.remove("active"));
     });
@@ -195,9 +196,10 @@ const display = (() => {
     editor.active.activeTool = "draw";
     editor.active.layer = this.className.includes("floor") ? 0
     : this.className.includes("wall") ? 1
-    : this.className.includes("sprites") ? 2
-    : this.className.includes("overlay") ? 3
+    : this.className.includes("sprite") ? 2
+    // : this.className.includes("overlay") ? 3
     : 4;
+    console.log(this.className);
     editor.active.tile = this.dataset.char;
   };
 
@@ -269,10 +271,11 @@ const display = (() => {
     const tilesList = document.querySelector(".tiles-list");
     const floorList = document.querySelector(".floor-list");
     const wallList = document.querySelector(".wall-list");
+    const spriteList = document.querySelector(".sprite-list");
     const ceilingList = document.querySelector(".ceiling-list");
     const files = document.querySelector("fieldset.files");
 
-    [body, tilesList, floorList, wallList, ceilingList,
+    [body, tilesList, floorList, wallList, ceilingList, spriteList,
       files].forEach(item => item.classList.toggle("rotate"));
   };
 
@@ -290,6 +293,9 @@ const editor = (() => {
     tile: "r",
   };
 
+  setInterval(() => {
+    console.log(active.activeTool, active.layer, active.tile);
+  }, 100);
 
   function editMapTile(argX, argY){
     if(typeof argX !== "number") {
