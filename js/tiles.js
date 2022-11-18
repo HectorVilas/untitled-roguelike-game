@@ -57,7 +57,7 @@ export const tiles = {
   "sprites": { //name, url, colRow, isBlocking, connectsToSelf, hasOverlay
     "wtb": new Entity("wooden table","./gfx/props16.png", { c:1, r:1 }, true, true, false),
     "wb": new Entity("wooden bed","./gfx/props16.png", { c:1, r:5 }, true, true, false),
-    "kc": new Entity("kitchen counter","./gfx/props16.png", { c:1, r:10 }, true, true, true),
+    "kc": new Entity("kitchen counter","./gfx/props16.png", { c:2, r:16 }, true, true, false),
     "ptr": new Entity("pantry","./gfx/props16.png", { c:6, r:2 }, true, false, true),
     "ovn": new Entity("oven","./gfx/props16.png", { c:7, r:2 }, true, false, true),
     "wbc": new Entity("wooden bookcase","./gfx/props16.png", { c:5, r:2 }, true, false, true),
