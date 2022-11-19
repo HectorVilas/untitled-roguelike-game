@@ -1,5 +1,5 @@
 # untitled-roguelike-game
-![](READMEmd/progress011.gif)
+![](READMEmd/progress019.gif)
 
 # Play: https://hectorvilas.github.io/untitled-roguelike-game/
 
@@ -398,3 +398,12 @@ Then I started working on hotkeys:
 - when the active tile is at the beginning or end, it will stay there (prevent going out of index)
 
 and more little code changes.
+
+## update 13
+A few fixes has been made on the tileset. A new tileset has been added for furniture. Then two new layers for the map, then the furniture, then the furniture can connect with itself (for kitchen counters, tables, etc) and tall ones have two tiles, with the top tile covering whatever is behind, then it got implemented in the map editor...
+
+![](READMEmd/progress019.gif)
+
+But now I have a problem: I need more layers if I want to keep the original code, or I can rewrite everything from scratch with a few new methods I came up with, that would make things much easier. I've been thinking for hours since yesterday and I don't want to lose all the history behind this repository, but I decided to restart everything from scratch, so I can start with a better, simpler and cleaner code.
+
+I'm going to make a new branch once I have most things figured out, then I'm going to delete everything and start from zero.
